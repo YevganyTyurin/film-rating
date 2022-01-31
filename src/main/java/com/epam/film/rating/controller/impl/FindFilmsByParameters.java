@@ -7,9 +7,13 @@ import com.epam.film.rating.dao.impl.ReviewDAOImpl;
 import com.epam.film.rating.entity.ReviewDTO;
 import com.epam.film.rating.entity.film.Film;
 import com.epam.film.rating.entity.review.Review;
+import com.epam.film.rating.service.FilmService;
 import com.epam.film.rating.service.Service;
 import com.epam.film.rating.service.ServiceFactory;
 import com.epam.film.rating.service.exception.ServiceException;
+import com.epam.film.rating.service.impl.FilmServiceImpl;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,6 +29,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class FindFilmsByParameters implements Command {
+    private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.FindFilmsByParameters.class);
+
     public final String parameterYear = "year";
     public final String parameterAgeRating = "age_rating";
     public final String parameterType = "type";
@@ -40,7 +46,8 @@ public class FindFilmsByParameters implements Command {
 
         try {
             ServiceFactory instance = ServiceFactory.getInstance();
-            Service service = instance.getService();
+            Service service = instance.getService(); //TODO
+            FilmService filmService = new FilmServiceImpl();
 
             response.setContentType("text/html");
 
@@ -68,7 +75,7 @@ public class FindFilmsByParameters implements Command {
 
             int startFromRecordNumber = (amountOfRecordsOnPage * pageNumber) - amountOfRecordsOnPage;
 
-            int filmAmount = service.getFilmAmount(year, age_rating, film_type, genres);
+            int filmAmount = filmService.getFilmAmount(year, age_rating, film_type, genres);
             int amountOfPages = 0;
 
             if (filmAmount % amountOfRecordsOnPage >= 1) {
@@ -86,14 +93,17 @@ public class FindFilmsByParameters implements Command {
 
             request.setAttribute(PAGE_NUMBERS, pageNumbers);
 
-            List<Film> films = service.getFilmsByParameters(year, age_rating, film_type, genres, startFromRecordNumber);
+            List<Film> films = filmService.getFilmsByParameters(year, age_rating, film_type, genres, startFromRecordNumber);
 
             request.setAttribute(attributeFilms, films);
 
+            RequestDispatcher dispatcher = request.getRequestDispatcher(currentURL);
+            dispatcher.forward(request, response);
+
         } catch (ServiceException e) {
-            //TODO
+            logger.error("Exception with finding films by parameters request.", e);
+            //TODO exception
         }
-        RequestDispatcher dispatcher = request.getRequestDispatcher(currentURL);
-        dispatcher.forward(request, response);
+
     }
 }

@@ -7,6 +7,7 @@ import com.epam.film.rating.entity.user.Role;
 import com.epam.film.rating.entity.user.User;
 import com.epam.film.rating.service.Service;
 import com.epam.film.rating.service.ServiceFactory;
+import com.epam.film.rating.service.UserService;
 import com.epam.film.rating.service.exception.ServiceException;
 
 import javax.servlet.RequestDispatcher;
@@ -17,8 +18,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Login implements Command {
+    private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.Login.class);
 
     public final String parameterLogin = "login";
     public final String parameterPassword = "password";
@@ -28,6 +32,10 @@ public class Login implements Command {
     public final String userRoleAttribute = "userRole";
     public final String userIdAttribute = "userId";
 
+    public final String userURL = "/WEB-INF/jsp/userMainPage.jsp";
+    public final String adminURL = "/WEB-INF/jsp/adminmainpage.jsp";
+    public final String URL = "URL";
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -35,7 +43,8 @@ public class Login implements Command {
         String password = request.getParameter(parameterPassword);
 
         ServiceFactory instance = ServiceFactory.getInstance();
-        Service service = instance.getService();
+        UserService service = instance.getUserService();
+
 
         try {
             User user = service.login(login, password);
@@ -48,21 +57,20 @@ public class Login implements Command {
 
                 if (user.getRole().equals(Role.USER)) {
                     user = null;
+                    session.setAttribute(URL, userURL);
                     RequestDispatcher dispatcher = request.getRequestDispatcher(userPageURL);
                     dispatcher.forward(request, response);
 
                 } else if (user.getRole().equals(Role.ADMINISTRATOR)) {
                     user = null;
+                    session.setAttribute(URL, adminURL);
                     RequestDispatcher dispatcher = request.getRequestDispatcher(adminPageURL);
                     dispatcher.forward(request, response);
                 }
-            } else {
-                //TODO some message about incorrect input (goto main page with ajax)
-                RequestDispatcher dispatcher = request.getRequestDispatcher(mainPageURL);
-                dispatcher.forward(request, response);
             }
         } catch (ServiceException e) {
-            //TODO log
+            logger.error("Exception with leaving review.", e);
+            //TODO exception page
         }
     }
 }

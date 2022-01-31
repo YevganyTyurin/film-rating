@@ -21,6 +21,13 @@ public final class CommandProvider {
         commands.put("leaveReview", new LeaveReview());
         commands.put("updateLike", new Like());
         commands.put("updateDislike", new Dislike());
+        commands.put("findReviewsByParameters", new FindReviewsByParameters());
+        commands.put("goToReviewChangePage", new GoToReviewChangePage());
+        commands.put("updateReview", new UpdateReview());
+        commands.put("deleteReview", new DeleteReview());
+        commands.put("banUser", new BanUser());
+        commands.put("findUsers", new FindUsers());
+        commands.put("logOut", new LogOut());
     }
 
     public final Command getCommand(String commandName) {

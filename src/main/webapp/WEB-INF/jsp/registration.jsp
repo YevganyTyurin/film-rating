@@ -1,11 +1,11 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
+
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <title>Title</title>
-
     <fmt:setLocale value="${sessionScope.local}" />
     <fmt:setBundle basename="local" var="loc" />
 
@@ -24,7 +24,7 @@
     <p>Name <input type="text" name="name" required></p>
     <p>Surname <input type="text" name="surname" required></p>
     <p>Phone number <input type="text" name="phoneNumber" required></p>
-    <p>eMail <input type="text" name="eMail" required></p>
+    <p>eMail <input type="text" name="email" required></p>
     <p><input type="submit" value="RUN" required></p>
 </form>
 

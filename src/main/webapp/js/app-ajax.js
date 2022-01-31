@@ -25,13 +25,13 @@ $(document).ready(function() {
 
 window.onload = function () {
     document.getElementById('show_review_form').onclick = function () {
-        if(document.getElementById('review_form').style.display == 'none') {
+        if(document.getElementById('review_form').style.display === 'none') {
             document.getElementById('review_form').style.display = 'block'
-            if (this.value=="Оставить отзыв") this.value = "Не оставлять отзыв";
+            if (this.value==="Оставить отзыв") this.value = "Не оставлять отзыв";
             else this.value = "Оставить отзыв";
         } else {
             document.getElementById('review_form').style.display = 'none'
-            if (this.value=="Оставить отзыв") this.value = "Не оставлять отзыв";
+            if (this.value==="Оставить отзыв") this.value = "Не оставлять отзыв";
             else this.value = "Оставить отзыв";
         }
     };
@@ -39,8 +39,7 @@ window.onload = function () {
 
 
 function updateLike(element) {
-    var element_child = element;
-    var element_parent = element_child.parentNode;
+    var element_parent = element.parentNode;
     $.ajax({
         url : 'Controller?command=updateLike',
         data : {
@@ -52,7 +51,7 @@ function updateLike(element) {
             function(responseText) {
                 var list = document.getElementsByClassName("c")[element_parent.id];
                 list.getElementsByClassName("n")[0].innerHTML = responseText;
-                if (list.getElementsByClassName("n")[1].style.backgroundColor == 'green') {
+                if (list.getElementsByClassName("n")[1].style.backgroundColor === 'green') {
                     list.getElementsByClassName("n")[1].style.backgroundColor = 'transparent';
                 } else {
                     list.getElementsByClassName("n")[1].style.backgroundColor = 'green';
@@ -64,7 +63,7 @@ function updateLike(element) {
                 }
             }
     });
-};
+}
 
 
 function updateDislike(element) {

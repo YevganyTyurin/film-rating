@@ -1,3 +1,19 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.form {
+    width: 300px;
+    padding: 32px;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px #ccc;
+    font-family: sans-serif;
+    letter-spacing: 1px;
+}
+
 table, th, td {
     border: 2px solid darkgrey;
     align-content: center;
@@ -16,25 +32,4 @@ table {
     padding: 25px;
 }
 
-a {
-    margin-right: 20px;
-    margin-left: 20px;
-}
 
-/*h2 {*/
-/*    align-content: center;*/
-/*    align-self: center;*/
-/*    margin-left: auto;*/
-/*    margin-right: auto;*/
-/*}*/
-
-/*h3 {*/
-/*    align-content: center;*/
-/*    align-self: center;*/
-/*    margin-left: auto;*/
-/*    margin-right: auto;*/
-/*}*/
-
-div.c {
-    font-family: 'lato', sans-serif;
-}

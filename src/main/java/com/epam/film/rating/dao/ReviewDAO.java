@@ -13,11 +13,11 @@ public interface ReviewDAO {
 
     List<ReviewDTO> getReviewsByFilmId(int filmId) throws DAOException;
 
-    ReviewApproval getReviewApprovalById(int userId, int reviewId) throws DAOException;
+//    ReviewApproval getReviewApprovalById(int userId, int reviewId) throws DAOException;
 
     int getLikesAmountById(int reviewId) throws DAOException;
 
-    boolean updateReviewApprovalLike(boolean isLiked, int userId, int reviewId) throws DAOException;
+//    boolean updateReviewApprovalLike(boolean isLiked, int userId, int reviewId) throws DAOException;
 
     boolean updateLikesAmountById(int likesAmount, int reviewId) throws DAOException;
 
@@ -25,9 +25,11 @@ public interface ReviewDAO {
 
     boolean updateDislikesAmountById(int dislikesAmount, int reviewId) throws DAOException;
 
-    boolean updateReviewApprovalDislike(boolean isDisliked, int userId, int reviewId) throws DAOException;
+//    boolean updateReviewApprovalDislike(boolean isDisliked, int userId, int reviewId) throws DAOException;
 
-    boolean addReviewApproval (int userId, int reviewId, boolean isLiked, boolean isDisliked) throws DAOException;
+//    boolean addReviewApproval (int userId, int reviewId, boolean isLiked, boolean isDisliked) throws DAOException;
 
     boolean addReview(Review review, int filmId) throws DAOException;
+
+    Review getReviewByReviewId(int reviewId) throws DAOException;
 }

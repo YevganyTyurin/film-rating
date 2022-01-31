@@ -3,6 +3,8 @@ package com.epam.film.rating.controller.impl;
 import com.epam.film.rating.controller.Command;
 import com.epam.film.rating.dao.impl.ReviewDAOImpl;
 import com.epam.film.rating.entity.review.ReviewApproval;
+import com.epam.film.rating.service.ReviewApprovalService;
+import com.epam.film.rating.service.ReviewService;
 import com.epam.film.rating.service.Service;
 import com.epam.film.rating.service.ServiceFactory;
 import com.epam.film.rating.service.exception.ServiceException;
@@ -13,9 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Dislike implements Command {
-
+    private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.Dislike.class);
     public final String id = "id";
     public final String userID = "userId";
     @Override
@@ -30,37 +34,40 @@ public class Dislike implements Command {
 
             ServiceFactory instance = ServiceFactory.getInstance();
             Service service = instance.getService();
+            ReviewApprovalService reviewApprovalService = instance.getReviewApprovalService();
+            ReviewService reviewService = instance.getReviewService();
 
-            dislikesAmount = service.getDislikesAmountById(reviewId);
-            ReviewApproval reviewApproval = service.getReviewApprovalById(userId, reviewId);
+            dislikesAmount = reviewService.getDislikesAmountById(reviewId);
+            ReviewApproval reviewApproval = reviewApprovalService.getReviewApprovalById(userId, reviewId);
+//            ReviewApproval reviewApproval = service.getReviewApprovalById(userId, reviewId);
             String dislikes = null;
             if(reviewApproval != null) {
 
                 if(reviewApproval.isDisliked()) {
-                    service.updateReviewApprovalDislike(false, userId, reviewId);
+                    reviewApprovalService.updateReviewApprovalDislike(false, userId, reviewId);
 
                     dislikesAmount--;
-                    service.updateDislikesAmountById(dislikesAmount, reviewId);
+                    reviewService.updateDislikesAmountById(dislikesAmount, reviewId);
                     dislikes = Integer.toString(dislikesAmount);
 
                 } else if(reviewApproval.isLiked() ) {
-                    service.updateReviewApprovalDislike(true, userId, reviewId);
+                    reviewApprovalService.updateReviewApprovalDislike(true, userId, reviewId);
 
                     dislikesAmount++;
-                    service.updateDislikesAmountById(dislikesAmount, reviewId);
+                    reviewService.updateDislikesAmountById(dislikesAmount, reviewId);
                     dislikes = Integer.toString(dislikesAmount);
                 } else {
-                    service.updateReviewApprovalDislike(true, userId, reviewId);
+                    reviewApprovalService.updateReviewApprovalDislike(true, userId, reviewId);
 
                     dislikesAmount++;
-                    service.updateDislikesAmountById(dislikesAmount, reviewId);
+                    reviewService.updateDislikesAmountById(dislikesAmount, reviewId);
                     dislikes = Integer.toString(dislikesAmount);
                 }
             } else {
-                service.addReviewApproval(userId, reviewId, false, true);
+                reviewApprovalService.addReviewApproval(userId, reviewId, false, true);
 
                 dislikesAmount++;
-                service.updateDislikesAmountById(dislikesAmount, reviewId);
+                reviewService.updateDislikesAmountById(dislikesAmount, reviewId);
                 dislikes = Integer.toString(dislikesAmount);
             }
 
@@ -68,7 +75,8 @@ public class Dislike implements Command {
             response.getWriter().write(dislikes);
 
         } catch (ServiceException e) {
-            e.printStackTrace();
+            logger.error("Exception in updating dislikes.", e);
+            //TODO exception
         }
     }
 }

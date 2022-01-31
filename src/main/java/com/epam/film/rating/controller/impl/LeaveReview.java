@@ -3,9 +3,12 @@ package com.epam.film.rating.controller.impl;
 import com.epam.film.rating.controller.Command;
 import com.epam.film.rating.dao.impl.ReviewDAOImpl;
 import com.epam.film.rating.entity.review.Review;
+import com.epam.film.rating.service.ReviewService;
 import com.epam.film.rating.service.Service;
 import com.epam.film.rating.service.ServiceFactory;
 import com.epam.film.rating.service.exception.ServiceException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
@@ -14,8 +17,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class LeaveReview implements Command {
+    private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.LeaveReview.class);
 
     public final String REVIEW_TEXT = "reviewText";
     public final String FILL_MARK = "filmMark";
@@ -41,18 +47,20 @@ public class LeaveReview implements Command {
         String result = null;
         try {
             ServiceFactory instance = ServiceFactory.getInstance();
-            Service service = instance.getService();
+            ReviewService service = instance.getReviewService();
             if(service.addReview(review, Integer.parseInt(filmId))) {
                 result = "success";
             } else {
                 result = "not success";
             }
+
+            response.setContentType("text/plain");
+            response.getWriter().write(result);
         } catch (ServiceException e) {
-            e.printStackTrace();
+            logger.error("Exception with leaving review.", e);
+            //TODO exception page
         }
 
-        response.setContentType("text/plain");
-        response.getWriter().write(result);
     }
 
     private String getFilmIdFromCookie(HttpServletRequest request, String parameter) {

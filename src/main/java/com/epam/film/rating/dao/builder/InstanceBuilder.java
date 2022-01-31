@@ -3,6 +3,7 @@ package com.epam.film.rating.dao.builder;
 import com.epam.film.rating.dao.impl.FilmDAOImpl;
 import com.epam.film.rating.dao.impl.ReviewDAOImpl;
 import com.epam.film.rating.dao.impl.UserDAOImpl;
+import com.epam.film.rating.entity.FilmReviewDTO;
 import com.epam.film.rating.entity.ReviewDTO;
 import com.epam.film.rating.entity.film.*;
 import com.epam.film.rating.entity.review.Review;
@@ -25,15 +26,32 @@ public class InstanceBuilder {
         user.setName(resultSet.getString(UserDAOImpl.NAME));
         user.setSurname(resultSet.getString(UserDAOImpl.SURNAME));
         user.setPhoneNumber(resultSet.getString(UserDAOImpl.PHONE_NUMBER));
-        user.seteMail(resultSet.getString(UserDAOImpl.E_MAIL)); //TODO EMAIL
+        user.seteMail(resultSet.getString(UserDAOImpl.EMAIL));
         user.setBanned(resultSet.getBoolean(UserDAOImpl.IS_BANNED));
         user.setRating(resultSet.getDouble(UserDAOImpl.RATING));
         user.setAvatarImage(resultSet.getString(UserDAOImpl.AVATAR_IMAGE));
         user.setRole(Role.getRole(resultSet.getInt(UserDAOImpl.ROLE_ID)));
         user.setStatus(resultSet.getString(UserDAOImpl.STATUS));
 
+        System.out.println("USER IS BLOCKED " + user.isBanned());
+
         return user;
     }
+
+//    public static User buildUser(ResultSet resultSet) throws SQLException {
+//        User user = new User();
+//
+//        user.setLogin(resultSet.getString(UserDAOImpl.LOGIN));
+//        user.setPassword(resultSet.getString(UserDAOImpl.PASSWORD));
+//        user.setNickname(resultSet.getString(UserDAOImpl.NICKNAME));
+//        user.setName(resultSet.getString(UserDAOImpl.NAME));
+//        user.setSurname(resultSet.getString(UserDAOImpl.SURNAME));
+//        user.setPhoneNumber(resultSet.getString(UserDAOImpl.PHONE_NUMBER));
+//        user.seteMail(resultSet.getString(UserDAOImpl.EMAIL));
+//        user.setBanned(resultSet.getBoolean(UserDAOImpl.IS_BANNED));
+//
+//        return user;
+//    }
 
     public static Review buildReview(ResultSet resultSet) throws SQLException {
         Review review = new Review();
@@ -85,5 +103,19 @@ public class InstanceBuilder {
         film.setType(resultSet.getString(FilmDAOImpl.TYPE));
 
         return film;
+    }
+
+    public static FilmReviewDTO buildFilmReviewDTO(ResultSet resultSet) throws SQLException {
+        FilmReviewDTO filmReviewDTO = new FilmReviewDTO();
+
+        filmReviewDTO.setReviewId(resultSet.getInt(ReviewDAOImpl.ID));
+        filmReviewDTO.setFilmName(resultSet.getString(FilmDAOImpl.NAME));
+        filmReviewDTO.setReview(resultSet.getString(ReviewDAOImpl.REVIEW));
+        filmReviewDTO.setUserId(resultSet.getInt("users_id"));
+//        filmReviewDTO.setBanned(resultSet.getBoolean("is_banned"));
+
+//        System.out.println("it's banned = " + filmReviewDTO.getIsBanned());
+
+        return filmReviewDTO;
     }
 }
