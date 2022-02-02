@@ -19,10 +19,10 @@ public class UpdateReview implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String id = request.getParameter("id");
-        System.out.println("ID = " + id);
-        String review = request.getParameter("review");
-        System.out.println("REVIEW = " + review);
+//        String id = request.getParameter("id");
+//        System.out.println("ID = " + id);
+//        String review = request.getParameter("review");
+//        System.out.println("REVIEW = " + review);
 
         //TODO
     }

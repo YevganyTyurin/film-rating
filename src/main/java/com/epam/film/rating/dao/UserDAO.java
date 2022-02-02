@@ -13,5 +13,9 @@ public interface UserDAO {
 
     User findById(int id) throws DAOException;
 
+    boolean isBanned(int id) throws DAOException;
+
+    boolean updateIsBanned(int id, boolean isBanned) throws DAOException;
+
     public List<User> getAll() throws SQLException;
 }

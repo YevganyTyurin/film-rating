@@ -27,4 +27,8 @@ public interface UserService {
     int add (User user) throws ServiceException;
 
     User findById(int id) throws ServiceException;
+
+    boolean updateIsBanned(int id, boolean isBanned) throws ServiceException;
+
+    boolean isBanned(int id) throws ServiceException;
 }

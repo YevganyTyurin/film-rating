@@ -82,5 +82,27 @@ public class UserServiceImpl implements UserService{
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
-    };
+    }
+
+    @Override
+    public boolean updateIsBanned(int id, boolean isBanned) throws ServiceException {
+        DAOFactory factory = DAOFactory.getInstance();
+        UserDAO userDAO = factory.getUserDAO();
+        try {
+            return userDAO.updateIsBanned(id, isBanned);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public boolean isBanned(int id) throws ServiceException {
+        DAOFactory factory = DAOFactory.getInstance();
+        UserDAO userDAO = factory.getUserDAO();
+        try {
+            return userDAO.isBanned(id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

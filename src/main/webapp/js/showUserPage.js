@@ -30,34 +30,89 @@ function makeAdmin(a, b) {
     });
 }
 
-function ban(a, b) {
+function ban(a) {
     $.ajax({
-        url : 'Controller?command=updateReview',
+        url : 'Controller?command=changeUserIsBanned',
         data : {
-            id : a,
-            review: b
+            id : a
         },
         async: false,
         type: 'POST',
         success :
             function() {
-                $('#isBannedResponse').text("true").delay();
+                if(document.getElementById("banUnban").textContent.trim() === "ban") {
+                    document.getElementById("banUnban").textContent = "unban";
+                    $('#isBannedResponse').text("true").delay();
+                } else {
+                    document.getElementById("banUnban").textContent = "ban";
+                    $('#isBannedResponse').text("false").delay();
+                }
             }
     });
 }
 
-function unban(a, b) {
+// function unban(a) {
+//     $.ajax({
+//         url : 'Controller?command=banUser',
+//         data : {
+//             id : a
+//         },
+//         async: false,
+//         type: 'POST',
+//         success :
+//             function() {
+//                 $('#isBannedResponse').text("false").delay();
+//                 alert(222);
+//             }
+//     });
+// }
+
+// function ban(a, b) {
+//     $.ajax({
+//         url : 'Controller?command=banUser',
+//         data : {
+//             id : a,
+//             isBanned: b
+//         },
+//         async: false,
+//         type: 'POST',
+//         success :
+//             function() {
+//                 $('#isBannedResponse').text("true").delay();
+//                 alert(111);
+//             }
+//     });
+// }
+//
+// function unban(a, b) {
+//     $.ajax({
+//         url : 'Controller?command=banUser',
+//         data : {
+//             id : a,
+//             isBanned: b
+//         },
+//         async: false,
+//         type: 'POST',
+//         success :
+//             function() {
+//                 $('#isBannedResponse').text("false").delay();
+//                 alert(222);
+//             }
+//     });
+// }
+
+function her() {
+    alert(5555);
     $.ajax({
-        url : 'Controller?command=updateReview',
+        url : 'Controller?command=banUser',
         data : {
-            id : a,
-            review: b
+            id : 333
         },
         async: false,
         type: 'POST',
         success :
             function() {
-                $('#isBannedResponse').text("false").delay();
+                alert(333);
             }
     });
 }

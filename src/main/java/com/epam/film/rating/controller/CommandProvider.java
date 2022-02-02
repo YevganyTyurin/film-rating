@@ -25,7 +25,7 @@ public final class CommandProvider {
         commands.put("goToReviewChangePage", new GoToReviewChangePage());
         commands.put("updateReview", new UpdateReview());
         commands.put("deleteReview", new DeleteReview());
-        commands.put("banUser", new BanUser());
+        commands.put("changeUserIsBanned", new ChangeUserIsBanned());
         commands.put("findUsers", new FindUsers());
         commands.put("logOut", new LogOut());
     }

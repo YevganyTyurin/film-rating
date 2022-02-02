@@ -33,12 +33,16 @@ public class UserDAOImpl implements UserDAO {
     public static String GET_USERS_BY_LOGIN_PASSWORD2 = "select user.id, user.login, user.password, user.nickname, user.name, user.surname, user.phone_number, user.email, user.is_banned, user.avatar_image, user.rating, user.user_role_id, user.user_status_id, user_status.status from user JOIN user_status ON user.user_status_id=user_status.id where login=? and password=?;";
     public static String GET_USER_BY_ID = "select user.id, user.login, user.password, user.nickname, user.name, user.surname, user.phone_number, user.email, user.is_banned, user.avatar_image, user.rating, user.user_role_id, user.user_status_id, user_status.status from user JOIN user_status ON user.user_status_id=user_status.id where user.id=?;";
 
+    public static String GET_IS_BANNED_BY_ID = "SELECT user.is_banned FROM user WHERE user.id=?;";
+
+
     //    public static String GET_USERS_BY_LOGIN_PASSWORD2 = "select user.login, user.password, user.nickname, user.name, user.surname, user.phone_number, user.email, user.is_banned, user.avatar_image, user.rating, user.user_role_id, user.user_status_id, user_status.status from user JOIN user_status ON user.user_status_id=user_status.id where login=? and password=?;";
  //   public static String ADD_USER = "insert into user (id, login, password, nickname, name, surname, phone_number, email, user_role_id, user_status_id) values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
     public static String ADD_USER = "insert into user (login, password, nickname, name, surname, phone_number, email) values(?, ?, ?, ?, ?, ?, ?);";
 
     public static String UPDATE_USER = "update user set login=?, password=?, nickname=?, name=?, surname=?, phone_number=?, email=?  where id=?;";
     public static String DELETE_USER = "delete from user where id=?;";
+    public static String UPDATE_IS_BANNED = "update user set is_banned=? where id=?;";
 
     public static String LOG_IN = "select * from user where login=? and password=?;";
 
@@ -64,6 +68,28 @@ public class UserDAOImpl implements UserDAO {
             return users;
         }catch (SQLException  sqlE) {
             throw new SQLException();
+        } finally {
+            connectable.closeConnection(resultSet, preparedStatement, connection);
+        }
+    }
+
+    @Override
+    public boolean isBanned (int userId) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            boolean isBanned;
+            connection = connectable.getConnection();
+            preparedStatement = connection.prepareStatement(GET_IS_BANNED_BY_ID);
+            preparedStatement.setInt(1, userId);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                return resultSet.getBoolean(UserDAOImpl.IS_BANNED);
+            }
+            return false;
+        }catch (SQLException  e) {
+            throw new DAOException(e);
         } finally {
             connectable.closeConnection(resultSet, preparedStatement, connection);
         }
@@ -190,6 +216,28 @@ public class UserDAOImpl implements UserDAO {
         }
         return 1;
     }
+
+    public boolean updateIsBanned(int id, boolean isBanned) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = connectable.getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_IS_BANNED);
+            preparedStatement.setInt(2, id);
+            preparedStatement.setBoolean(1, isBanned);
+            System.out.println("ccccccc");
+            System.out.println(preparedStatement.executeUpdate());
+            if (preparedStatement.executeUpdate() == 1) {
+                return true;
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            connectable.closeConnection(preparedStatement, connection);
+        }
+        return false;
+    }
+
 
     public int delete (int id) throws SQLException, InterruptedException {
         Connection connection = null;

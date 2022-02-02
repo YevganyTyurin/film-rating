@@ -9,7 +9,7 @@
         <script src="https://code.jquery.com/jquery-1.10.2.js"
                 type="text/javascript"></script>
     <script src="js/showUserPage.js" type="text/javascript"></script>
-    <link href="css/style.css" rel="stylesheet">
+<%--    <link href="css/style.css" rel="stylesheet">--%>
 
     <fmt:setLocale value="${sessionScope.local}" />
     <fmt:setBundle basename="local" var="loc" />
@@ -68,8 +68,21 @@
 <div align="center">
     <button onclick="makeAdmin(document.getElementById('a').value, document.getElementById('b').value)">make admin</button>
     <button onclick="makeUser(document.getElementById('a').value, document.getElementById('b').value)">make user</button>
-    <button onclick="ban(document.getElementById('c').value, document.getElementById('d').value)">ban</button>
-    <button onclick="unban(document.getElementById('c').value, document.getElementById('d').value)">unban</button>
+<%--    <button onclick="ban(document.getElementById('c').value, document.getElementById('d').value)">ban</button>--%>
+<%--    <button onclick="unban(document.getElementById('c').value, document.getElementById('d').value)">unban</button>--%>
+    <button onclick="ban(document.getElementById('c').value)" id="banUnban">
+
+
+        <c:if test="${user.isBanned() eq true}">
+            unban
+        </c:if>
+        <c:if test="${user.isBanned() eq false}">
+            ban
+        </c:if>
+
+
+    </button>
+
 </div>
 
 </body>
