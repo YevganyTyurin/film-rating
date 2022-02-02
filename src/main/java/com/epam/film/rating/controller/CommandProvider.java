@@ -28,6 +28,7 @@ public final class CommandProvider {
         commands.put("changeUserIsBanned", new ChangeUserIsBanned());
         commands.put("findUsers", new FindUsers());
         commands.put("logOut", new LogOut());
+        commands.put("changeUserRole", new ChangeUserRole());
     }
 
     public final Command getCommand(String commandName) {

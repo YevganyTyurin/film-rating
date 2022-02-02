@@ -66,21 +66,14 @@
 
 <br>
 <div align="center">
-    <button onclick="makeAdmin(document.getElementById('a').value, document.getElementById('b').value)">make admin</button>
-    <button onclick="makeUser(document.getElementById('a').value, document.getElementById('b').value)">make user</button>
-<%--    <button onclick="ban(document.getElementById('c').value, document.getElementById('d').value)">ban</button>--%>
-<%--    <button onclick="unban(document.getElementById('c').value, document.getElementById('d').value)">unban</button>--%>
+    <button onclick="changeRole(document.getElementById('a').value)" id="changeRole">change role</button>
     <button onclick="ban(document.getElementById('c').value)" id="banUnban">
-
-
         <c:if test="${user.isBanned() eq true}">
             unban
         </c:if>
         <c:if test="${user.isBanned() eq false}">
             ban
         </c:if>
-
-
     </button>
 
 </div>

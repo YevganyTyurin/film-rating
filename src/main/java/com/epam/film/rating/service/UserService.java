@@ -31,4 +31,8 @@ public interface UserService {
     boolean updateIsBanned(int id, boolean isBanned) throws ServiceException;
 
     boolean isBanned(int id) throws ServiceException;
+
+    boolean updateRole(int userId, int roleId) throws ServiceException;
+
+    int getRoleId (int userId) throws ServiceException;
 }

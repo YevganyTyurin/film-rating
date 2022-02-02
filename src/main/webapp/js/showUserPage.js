@@ -30,6 +30,26 @@ function makeAdmin(a, b) {
     });
 }
 
+function changeRole(a) {
+    $.ajax({
+        url : 'Controller?command=changeUserRole',
+        data : {
+            id : a
+        },
+        async: false,
+        type: 'POST',
+        success :
+            function() {
+                alert(555);
+                if(document.getElementById("roleResponse").textContent.trim() === "USER") {
+                    $('#roleResponse').text("ADMINISTRATOR").delay();
+                } else {
+                    $('#roleResponse').text("USER").delay();
+                }
+            }
+    });
+}
+
 function ban(a) {
     $.ajax({
         url : 'Controller?command=changeUserIsBanned',

@@ -105,4 +105,26 @@ public class UserServiceImpl implements UserService{
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public boolean updateRole(int userId, int roleId) throws ServiceException {
+        DAOFactory factory = DAOFactory.getInstance();
+        UserDAO userDAO = factory.getUserDAO();
+        try {
+            return userDAO.updateRole(userId, roleId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int getRoleId (int userId) throws ServiceException {
+        DAOFactory factory = DAOFactory.getInstance();
+        UserDAO userDAO = factory.getUserDAO();
+        try {
+            return userDAO.getRoleId(userId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

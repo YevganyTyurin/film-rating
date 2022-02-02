@@ -1,6 +1,9 @@
 package com.epam.film.rating.controller.impl;
 
 import com.epam.film.rating.controller.Command;
+import com.epam.film.rating.dao.exception.DAOException;
+import com.epam.film.rating.dao.impl.UserDAOImpl;
+import com.epam.film.rating.entity.user.Role;
 import com.epam.film.rating.service.ServiceFactory;
 import com.epam.film.rating.service.UserService;
 import com.epam.film.rating.service.exception.ServiceException;
@@ -12,8 +15,8 @@ import java.io.IOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class ChangeUserIsBanned implements Command {
-    private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.ChangeUserIsBanned.class);
+public class ChangeUserRole implements Command {
+    private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.ChangeUserRole.class);
     public final String id = "id";
 
     @Override
@@ -24,12 +27,17 @@ public class ChangeUserIsBanned implements Command {
         try {
             ServiceFactory instance = ServiceFactory.getInstance();
             UserService userService = instance.getUserService();
-            boolean isBanned = userService.isBanned(userId);
-            userService.updateIsBanned(userId, !isBanned);
+
+            int roleId = userService.getRoleId(userId);
+            if(roleId == Role.USER.getId()) {
+                userService.updateRole(userId, Role.ADMINISTRATOR.getId());
+            } else {
+                userService.updateRole(userId, Role.USER.getId());
+            }
+
         } catch (ServiceException e) {
-            logger.error("Exception in baning/unbanning user.", e);
+            logger.error("Exception in changing user role.", e);
             //TODO exception
         }
     }
-
 }

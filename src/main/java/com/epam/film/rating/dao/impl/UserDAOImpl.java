@@ -4,6 +4,7 @@ import com.epam.film.rating.connectionpool.ConnectionPool;
 import com.epam.film.rating.dao.UserDAO;
 import com.epam.film.rating.dao.builder.InstanceBuilder;
 import com.epam.film.rating.dao.exception.DAOException;
+import com.epam.film.rating.entity.user.Role;
 import com.epam.film.rating.entity.user.User;
 
 import java.sql.*;
@@ -34,6 +35,7 @@ public class UserDAOImpl implements UserDAO {
     public static String GET_USER_BY_ID = "select user.id, user.login, user.password, user.nickname, user.name, user.surname, user.phone_number, user.email, user.is_banned, user.avatar_image, user.rating, user.user_role_id, user.user_status_id, user_status.status from user JOIN user_status ON user.user_status_id=user_status.id where user.id=?;";
 
     public static String GET_IS_BANNED_BY_ID = "SELECT user.is_banned FROM user WHERE user.id=?;";
+    public static String GET_ROLE_ID = "SELECT user.user_role_id FROM user WHERE user.id=?;";
 
 
     //    public static String GET_USERS_BY_LOGIN_PASSWORD2 = "select user.login, user.password, user.nickname, user.name, user.surname, user.phone_number, user.email, user.is_banned, user.avatar_image, user.rating, user.user_role_id, user.user_status_id, user_status.status from user JOIN user_status ON user.user_status_id=user_status.id where login=? and password=?;";
@@ -43,6 +45,7 @@ public class UserDAOImpl implements UserDAO {
     public static String UPDATE_USER = "update user set login=?, password=?, nickname=?, name=?, surname=?, phone_number=?, email=?  where id=?;";
     public static String DELETE_USER = "delete from user where id=?;";
     public static String UPDATE_IS_BANNED = "update user set is_banned=? where id=?;";
+    public static String UPDATE_ROLE = "UPDATE user SET user_role_id=? WHERE id=?;";
 
     public static String LOG_IN = "select * from user where login=? and password=?;";
 
@@ -93,6 +96,47 @@ public class UserDAOImpl implements UserDAO {
         } finally {
             connectable.closeConnection(resultSet, preparedStatement, connection);
         }
+    }
+
+    @Override
+    public int getRoleId (int userId) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = connectable.getConnection();
+            preparedStatement = connection.prepareStatement(GET_ROLE_ID);
+            preparedStatement.setInt(1, userId);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                return resultSet.getInt(UserDAOImpl.ROLE_ID);
+            }
+            return resultSet.getInt(UserDAOImpl.ROLE_ID);
+        }catch (SQLException  e) {
+            throw new DAOException(e);
+        } finally {
+            connectable.closeConnection(resultSet, preparedStatement, connection);
+        }
+    }
+
+    @Override
+    public boolean updateRole(int userId, int roleId) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = connectable.getConnection();
+            preparedStatement = connection.prepareStatement(UPDATE_ROLE);
+            preparedStatement.setInt(1, roleId);
+            preparedStatement.setInt(2, userId);
+            if (preparedStatement.executeUpdate() == 1) {
+                return true;
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            connectable.closeConnection(preparedStatement, connection);
+        }
+        return false;
     }
 
     @Override
@@ -217,6 +261,7 @@ public class UserDAOImpl implements UserDAO {
         return 1;
     }
 
+    @Override
     public boolean updateIsBanned(int id, boolean isBanned) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -225,8 +270,6 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement = connection.prepareStatement(UPDATE_IS_BANNED);
             preparedStatement.setInt(2, id);
             preparedStatement.setBoolean(1, isBanned);
-            System.out.println("ccccccc");
-            System.out.println(preparedStatement.executeUpdate());
             if (preparedStatement.executeUpdate() == 1) {
                 return true;
             }

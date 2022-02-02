@@ -1,6 +1,7 @@
 package com.epam.film.rating.dao;
 
 import com.epam.film.rating.dao.exception.DAOException;
+import com.epam.film.rating.entity.user.Role;
 import com.epam.film.rating.entity.user.User;
 
 import java.sql.SQLException;
@@ -16,6 +17,10 @@ public interface UserDAO {
     boolean isBanned(int id) throws DAOException;
 
     boolean updateIsBanned(int id, boolean isBanned) throws DAOException;
+
+    boolean updateRole(int userId, int roleId) throws DAOException;
+
+    int getRoleId (int userId) throws DAOException;
 
     public List<User> getAll() throws SQLException;
 }
