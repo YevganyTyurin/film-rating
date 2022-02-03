@@ -97,7 +97,7 @@ public class ReviewApprovalDAOImpl implements ReviewApprovalDAO {
 
             if(pr.executeUpdate() == 1) {
                 return true;
-            };
+            }
         } catch (SQLException e) {
             throw new DAOException(e);
         } finally {

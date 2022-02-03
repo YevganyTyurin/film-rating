@@ -86,4 +86,15 @@ public class ReviewServiceImpl implements ReviewService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public boolean updateReview(int reviewId, String review) throws ServiceException {
+        DAOFactory factory = DAOFactory.getInstance();
+        ReviewDAO reviewDAO = factory.getReviewDAO();
+        try {
+            return reviewDAO.updateReview(reviewId, review);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

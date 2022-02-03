@@ -25,6 +25,8 @@ function changeReview(a, b) {
         type: 'POST',
         success :
             function() {
+            alert(a);
+            alert(b);
                 $('#changeResponse').text(b).delay();
             }
     });

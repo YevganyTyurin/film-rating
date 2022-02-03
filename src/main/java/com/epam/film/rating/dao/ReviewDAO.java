@@ -32,4 +32,6 @@ public interface ReviewDAO {
     boolean addReview(Review review, int filmId) throws DAOException;
 
     Review getReviewByReviewId(int reviewId) throws DAOException;
+
+    boolean updateReview(int reviewId, String review) throws DAOException;
 }
