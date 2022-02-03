@@ -13,18 +13,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class DeleteReview implements Command {
+    private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.DeleteReview.class);
 
-    public final String id = "id";
-    public final String userID = "userId";
+    public final String ID = "id";
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        try {
+            int reviewId = Integer.parseInt(request.getParameter(ID));
 
-        int reviewId = Integer.parseInt(request.getParameter(id));
+            ServiceFactory instance = ServiceFactory.getInstance();
+            ReviewService reviewService = instance.getReviewService();
 
-        System.out.println("HERE IS REVIEW ID + " + reviewId);
-
-        //TODO
+            reviewService.deleteReview(reviewId);
+        } catch (ServiceException e) {
+            logger.error("Exception in deleting film review.", e);
+            //TODO exception
+        }
     }
 }

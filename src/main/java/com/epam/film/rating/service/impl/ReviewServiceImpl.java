@@ -97,4 +97,15 @@ public class ReviewServiceImpl implements ReviewService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public boolean deleteReview (int id) throws ServiceException {
+        DAOFactory factory = DAOFactory.getInstance();
+        ReviewDAO reviewDAO = factory.getReviewDAO();
+        try {
+            return reviewDAO.deleteReview (id);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

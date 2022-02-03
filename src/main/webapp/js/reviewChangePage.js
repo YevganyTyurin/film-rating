@@ -19,14 +19,11 @@ function changeReview(a, b) {
         data : {
             id : a,
             review: b
-            // review: elementReview
         },
         async: false,
         type: 'POST',
         success :
             function() {
-            alert(a);
-            alert(b);
                 $('#changeResponse').text(b).delay();
             }
     });

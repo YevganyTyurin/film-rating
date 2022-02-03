@@ -46,6 +46,8 @@ public class ReviewDAOImpl implements ReviewDAO {
     public static String UPDATE_LIKES_AMOUNT_BY_ID = "update review set review.likes_amount=? where review.id=?;";
     public static String UPDATE_REVIEW_BY_ID = "update review set review.review=? where review.id=?;";
 
+    public static String DELETE_REVIEW = "DELETE FROM review WHERE id=?;";
+
     public static String UPDATE_DISLIKES_AMOUNT_BY_ID = "update review set review.dislikes_amount=? where review.id=?;";
 
 //    public static String GET_REVIEW_APPROVAL = "SELECT user_review_approval.is_liked FROM user_review_approval WHERE user_review_approval.users_id=? AND user_review_approval.review_id=?;";
@@ -529,19 +531,22 @@ public class ReviewDAOImpl implements ReviewDAO {
         return false;
     }
 
-//    public int deleteReview (int id) throws SQLException, InterruptedException {
-//        Connection connection = null;
-//        PreparedStatement preparedStatement = null;
-//        try {
-//            connection = connectable.getConnection();
-//            preparedStatement = connection.prepareStatement(DELETE_USER);
-//            preparedStatement.setInt(1, id);
-//            return preparedStatement.executeUpdate();
-//        } catch (SQLException e) {
-//            //TODO
-//        } finally {
-//            connectable.closeConnection(preparedStatement, connection);
-//        }
-//        return 1;
-//    }
+    @Override
+    public boolean deleteReview (int id) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = connectable.getConnection();
+            preparedStatement = connection.prepareStatement(DELETE_REVIEW);
+            preparedStatement.setInt(1, id);
+            if(preparedStatement.executeUpdate() == 1) {
+                return true;
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            connectable.closeConnection(preparedStatement, connection);
+        }
+        return false;
+    }
 }

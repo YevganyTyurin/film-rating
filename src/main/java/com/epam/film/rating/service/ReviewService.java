@@ -23,4 +23,6 @@ public interface ReviewService {
     boolean updateDislikesAmountById(int dislikesAmount, int reviewId) throws ServiceException;
 
     boolean updateReview(int reviewId, String review) throws ServiceException;
+
+    boolean deleteReview (int id) throws ServiceException;
 }
