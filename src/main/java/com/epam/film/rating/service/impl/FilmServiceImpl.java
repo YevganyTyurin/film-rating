@@ -41,6 +41,71 @@ public class FilmServiceImpl implements FilmService {
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
+    }
 
+    @Override
+    public int addFilm (String filmName, int productionYear, String description, int ageRatingId, int typeId) throws ServiceException {
+        DAOFactory factory = DAOFactory.getInstance();
+        FilmDAO filmDAO = factory.getFilmDAO();
+        try {
+            return filmDAO.addFilm(filmName, productionYear, description, ageRatingId, typeId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int getFilmId(String filmName, int year) throws ServiceException {
+        DAOFactory factory = DAOFactory.getInstance();
+        FilmDAO filmDAO = factory.getFilmDAO();
+        try {
+            return filmDAO.getFilmId(filmName, year);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int addFilmGenre(int filmId, int genreId) throws ServiceException {
+        DAOFactory factory = DAOFactory.getInstance();
+        FilmDAO filmDAO = factory.getFilmDAO();
+        try {
+            return filmDAO.addFilmGenre(filmId, genreId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int getAgeRatingId(String ageRating) throws ServiceException {
+        DAOFactory factory = DAOFactory.getInstance();
+        FilmDAO filmDAO = factory.getFilmDAO();
+        try {
+            return filmDAO.getAgeRatingId(ageRating);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int getFilmTypeId(String filmType) throws ServiceException {
+        DAOFactory factory = DAOFactory.getInstance();
+        FilmDAO filmDAO = factory.getFilmDAO();
+        try {
+            return filmDAO.getFilmTypeId(filmType);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
+    public int getGenreId(String genre) throws ServiceException {
+        DAOFactory factory = DAOFactory.getInstance();
+        FilmDAO filmDAO = factory.getFilmDAO();
+        try {
+            return filmDAO.getGenreId(genre);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
     }
 }

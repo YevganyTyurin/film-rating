@@ -29,6 +29,7 @@ public final class CommandProvider {
         commands.put("findUsers", new FindUsers());
         commands.put("logOut", new LogOut());
         commands.put("changeUserRole", new ChangeUserRole());
+        commands.put("addFilm", new AddFilm());
     }
 
     public final Command getCommand(String commandName) {

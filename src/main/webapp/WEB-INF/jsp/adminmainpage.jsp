@@ -86,8 +86,9 @@
     <div align="center" id="addFilm" style="display: none">
         <form action="Controller?command=addFilm" method="get">
             <h3>Select film parameters</h3>
-            <input type="hidden" name="command" value="findReviewsByParameters">
-            <p>production year <input type="number" name="production year"/></p>
+            <input type="hidden" name="command" value="addFilm">
+            <p>production year <input type="number" name="productionYear"/></p>
+            <p>film name <input type="text" name="filmName"/></p>
             <p>description <input type="text" name="description"/></p>
             <p>
                 <input type="radio" name="age_rating" value="R6">6+
