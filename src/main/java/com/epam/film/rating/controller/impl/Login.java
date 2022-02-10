@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.SQLException;
+
+import com.epam.film.rating.service.util.Password;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -47,13 +49,19 @@ public class Login implements Command {
 
 
         try {
-            User user = service.login(login, password);
+//            User user = service.login(login, password);
+            User user = service.login2(login);
 
-            if(user != null) {
+            boolean isCheckedPassword = Password.checkPassword(password, user.getPassword());
+
+
+
+            if(user != null && isCheckedPassword) {
                 HttpSession session = request.getSession();
 
                 session.setAttribute(userIdAttribute, user.getId());
                 session.setAttribute(userRoleAttribute, user.getRole());
+                session.setAttribute("isBanned", user.isBanned());
 
                 if (user.getRole().equals(Role.USER)) {
                     user = null;

@@ -12,6 +12,8 @@ public interface UserDAO {
 
     User login(String login, String password) throws DAOException;
 
+    User login2(String login) throws DAOException;
+
     User findById(int id) throws DAOException;
 
     boolean isBanned(int id) throws DAOException;

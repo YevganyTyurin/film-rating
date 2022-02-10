@@ -43,7 +43,7 @@ public class UserValidator {
         return isBasicValidated(email) && validateParameterByPattern(email, PATTERN_EMAIL);
     }
 
-    public boolean validateUser (User user) {
+    public boolean validateUserRegistration(User user) {
         return validateLogin(user.getLogin()) &&
                 validatePassword(user.getPassword()) &&
                 validateNickname(user.getNickname()) &&
@@ -51,6 +51,11 @@ public class UserValidator {
                 validateSurname(user.getSurname()) &&
                 validatePhoneNumber(user.getPhoneNumber()) &&
                 validateEmail(user.geteMail());
+    }
+
+    public boolean validateUserLogin(User user) {
+        return validateLogin(user.getLogin()) &&
+                validatePassword(user.getPassword());
     }
 
     private boolean isBasicValidated(String parameter) {

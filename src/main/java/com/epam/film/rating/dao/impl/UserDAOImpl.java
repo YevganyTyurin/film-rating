@@ -32,6 +32,8 @@ public class UserDAOImpl implements UserDAO {
     public static String GET_USERS = "select * from user;";
     public static String GET_USERS_BY_LOGIN_PASSWORD = "select * from user where login=? and password=?;";
     public static String GET_USERS_BY_LOGIN_PASSWORD2 = "select user.id, user.login, user.password, user.nickname, user.name, user.surname, user.phone_number, user.email, user.is_banned, user.avatar_image, user.rating, user.user_role_id, user.user_status_id, user_status.status from user JOIN user_status ON user.user_status_id=user_status.id where login=? and password=?;";
+    public static String GET_USER_BY_LOGIN = "select user.id, user.login, user.password, user.nickname, user.name, user.surname, user.phone_number, user.email, user.is_banned, user.avatar_image, user.rating, user.user_role_id, user.user_status_id, user_status.status from user JOIN user_status ON user.user_status_id=user_status.id where login=?;";
+
     public static String GET_USER_BY_ID = "select user.id, user.login, user.password, user.nickname, user.name, user.surname, user.phone_number, user.email, user.is_banned, user.avatar_image, user.rating, user.user_role_id, user.user_status_id, user_status.status from user JOIN user_status ON user.user_status_id=user_status.id where user.id=?;";
 
     public static String GET_IS_BANNED_BY_ID = "SELECT user.is_banned FROM user WHERE user.id=?;";
@@ -150,6 +152,28 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement = connection.prepareStatement(GET_USERS_BY_LOGIN_PASSWORD2);
             preparedStatement.setString(1, login);
             preparedStatement.setString(2, password);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                user = InstanceBuilder.buildUser(resultSet);
+            }
+            return user;
+        }catch (SQLException  e) {
+            throw new DAOException(e);
+        } finally {
+            connectable.closeConnection(resultSet, preparedStatement, connection);
+        }
+    }
+
+    @Override
+    public User login2(String login) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            User user = new User();
+            connection = connectable.getConnection();
+            preparedStatement = connection.prepareStatement(GET_USER_BY_LOGIN);
+            preparedStatement.setString(1, login);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 user = InstanceBuilder.buildUser(resultSet);

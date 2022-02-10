@@ -20,9 +20,12 @@ public interface UserService {
 
     boolean validateEmail(String email);
 
-    boolean validateUser (User user);
+    boolean validateUserRegistration(User user);
+
+    boolean validateUserLogin(User user);
 
     User login(String login, String password) throws ServiceException;
+    User login2(String login) throws ServiceException;
 
     int add (User user) throws ServiceException;
 

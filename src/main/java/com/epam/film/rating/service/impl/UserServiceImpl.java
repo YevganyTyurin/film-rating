@@ -47,8 +47,13 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public boolean validateUser (User user) {
-        return userValidator.validateUser(user);
+    public boolean validateUserRegistration(User user) {
+        return userValidator.validateUserRegistration(user);
+    }
+
+    @Override
+    public boolean validateUserLogin(User user) {
+        return userValidator.validateUserLogin(user);
     }
 
     @Override
@@ -61,6 +66,18 @@ public class UserServiceImpl implements UserService{
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public User login2(String login) throws ServiceException {
+        DAOFactory factory = DAOFactory.getInstance();
+        UserDAO userDAO = factory.getUserDAO();
+        try {
+            return userDAO.login2(login);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
 
     @Override
     public int add (User user) throws ServiceException {

@@ -30,6 +30,7 @@ public final class CommandProvider {
         commands.put("logOut", new LogOut());
         commands.put("changeUserRole", new ChangeUserRole());
         commands.put("addFilm", new AddFilm());
+        commands.put("activateAccount", new ActivateAccount());
     }
 
     public final Command getCommand(String commandName) {

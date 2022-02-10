@@ -1,13 +1,10 @@
 package com.epam.film.rating.controller.impl;
 
 import com.epam.film.rating.controller.Command;
-import com.epam.film.rating.dao.DAOFactory;
-import com.epam.film.rating.dao.UserDAO;
-import com.epam.film.rating.dao.exception.DAOException;
 import com.epam.film.rating.entity.user.User;
 import com.epam.film.rating.service.*;
 import com.epam.film.rating.service.exception.ServiceException;
-import com.epam.film.rating.service.impl.UserServiceImpl;
+import com.epam.film.rating.service.util.Password;
 import com.epam.film.rating.service.validator.UserValidator;
 
 import javax.servlet.RequestDispatcher;
@@ -15,9 +12,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -39,22 +34,51 @@ public class Registration implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        System.out.println("registration");
+
         ServiceFactory instance = ServiceFactory.getInstance();
         UserService userService = instance.getUserService();
 
         try {
 
+            System.out.println("login = " + request.getParameter(login));
+
+            System.out.println("password = " + request.getParameter(password));
+
+            System.out.println("nickname = " + request.getParameter(nickname));
+
+            System.out.println("name = " + request.getParameter(name));
+
+            System.out.println("surname = " + request.getParameter(surname));
+
+            System.out.println("number = " + request.getParameter(phoneNumber));
+
+            System.out.println("email = " + request.getParameter(email));
+
             User user = new User();
             user.setLogin(request.getParameter(login));
             user.setPassword(request.getParameter(password));
+
+            Password.hashPassword(request.getParameter(password));
+            System.out.println("passport hash = " + Password.hashPassword(request.getParameter(password)));
             user.setNickname(request.getParameter(nickname));
             user.setName(request.getParameter(name));
             user.setSurname(request.getParameter(surname));
             user.setPhoneNumber(request.getParameter(phoneNumber));
             user.seteMail(request.getParameter(email));
 
-            if(userService.validateUser(user)) {
-                userService.add(user);
+            System.out.println("hello! anybody is here?");
+
+            if(userService.validateUserRegistration(user)) {
+                user.setPassword(Password.hashPassword(request.getParameter(password)));
+//                userService.add(user);
+                //TODO code
+                if (userService.add(user) != 0) {
+                    System.out.println("we are here inside IF");
+//                    SendingEmail se = new SendingEmail(user.geteMail());
+                    System.out.println("we try to send mail");
+//                    se.sendMail();
+                }
             }
 
             UserValidator userValidator = new UserValidator();
