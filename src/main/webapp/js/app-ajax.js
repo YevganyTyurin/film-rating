@@ -12,6 +12,7 @@ $(document).ready(function() {
                 type: 'POST',
                 success :
                     function() {
+                    alert(1111);
                         document.getElementById('review').style.display = 'none';
                         $('#ajaxGetUserServletResponse').text('Отзыв оставлен').delay(2500).hide(0);
                     }
@@ -21,7 +22,6 @@ $(document).ready(function() {
         }
     });
 });
-
 
 window.onload = function () {
     document.getElementById('show_review_form').onclick = function () {
@@ -36,7 +36,6 @@ window.onload = function () {
         }
     };
 };
-
 
 function updateLike(element) {
     var element_parent = element.parentNode;
@@ -56,7 +55,6 @@ function updateLike(element) {
                 } else {
                     list.getElementsByClassName("n")[1].style.backgroundColor = 'green';
                 }
-
                 if (list.getElementsByClassName("n")[2].style.backgroundColor == 'red' &&
                     list.getElementsByClassName("n")[1].style.backgroundColor == 'green') {
                     updateDislike(element);

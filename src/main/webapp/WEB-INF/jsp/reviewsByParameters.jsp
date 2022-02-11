@@ -4,9 +4,15 @@
 
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 
-    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
 
     <fmt:setLocale value="${sessionScope.local}" />
     <fmt:setBundle basename="local" var="loc" />
@@ -17,28 +23,25 @@
 </head>
 <body>
 
-<br>
-
-<div align="right">
-    <form>
-
-        <button type="submit" name="local" value="en" formaction="Controller?command=changeLanguage" formmethod="post">${en_button}</button>
-
-        <button type="submit" name="local" value="ru" formaction="Controller?command=changeLanguage" formmethod="post">${ru_button}</button>
-
+<div class="container">
+    <form id="abc" action="Controller" class="abc" method="post">
+        <button type="submit" formaction="Controller?command=goToMainPage" formmethod="post">Main page</button>
         <button type="submit" formaction="Controller?command=logOut" formmethod="post">Log out</button>
+        <button type="submit" name="local" value="en" formaction="Controller?command=changeLanguage" formmethod="post">${en_button}</button>
+        <button type="submit" name="local" value="ru" formaction="Controller?command=changeLanguage" formmethod="post">${ru_button}</button>
     </form>
 </div>
+
 <br>
 <br>
 
-<h3 align="center">Reviews</h3>
+<h2 align="center">Reviews</h2>
     <table>
         <tr>
-            <td>User Id</td>
-            <td>Film name</td>
-            <td>Review</td>
-            <td></td>
+            <th width="8%">User Id</th>
+            <th width="20%">Film name</th>
+            <th width="50%">Review</th>
+            <th width="22%"></th>
         </tr>
         <c:forEach items="${reviews}" var="review" varStatus="status">
         <tr>
@@ -53,7 +56,6 @@
         </tr>
         </c:forEach>
     </table>
-
 
 </body>
 </html>

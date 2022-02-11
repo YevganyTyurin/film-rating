@@ -66,14 +66,16 @@ public class Login implements Command {
                 if (user.getRole().equals(Role.USER)) {
                     user = null;
                     session.setAttribute(URL, userURL);
-                    RequestDispatcher dispatcher = request.getRequestDispatcher(userPageURL);
-                    dispatcher.forward(request, response);
+//                    RequestDispatcher dispatcher = request.getRequestDispatcher(userPageURL);
+//                    dispatcher.forward(request, response);
+                    response.sendRedirect("Controller?command=goToMainPage");
 
                 } else if (user.getRole().equals(Role.ADMINISTRATOR)) {
                     user = null;
                     session.setAttribute(URL, adminURL);
-                    RequestDispatcher dispatcher = request.getRequestDispatcher(adminPageURL);
-                    dispatcher.forward(request, response);
+//                    RequestDispatcher dispatcher = request.getRequestDispatcher(adminPageURL);
+//                    dispatcher.forward(request, response);
+                    response.sendRedirect("Controller?command=goToAdminPage");
                 }
             }
         } catch (ServiceException e) {

@@ -8,9 +8,16 @@
 
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 
-    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script defer src="js/loginValidation.js"></script>
 
     <fmt:setLocale value="${sessionScope.local}" />
     <fmt:setBundle basename="local" var="loc" />
@@ -19,35 +26,38 @@
     <fmt:message bundle="${loc}" key="local.locbutton.name.ru" var="ru_button" />
     <fmt:message bundle="${loc}" key="local.locbutton.name.en" var="en_button" />
 
+
+
 </head>
 <body>
 
-<br>
-<div align="right">
-    <form>
-        <button type="submit" name="local" value="en" formaction="Controller?command=changeLanguage" formmethod="post">${en_button}</button>
-
-        <button type="submit" name="local" value="ru" formaction="Controller?command=changeLanguage" formmethod="post">${ru_button}</button>
-
+<div class="container">
+    <form id="abc" action="Controller" class="abc" method="post">
         <button type="submit" formaction="Controller?command=logOut" formmethod="post">Log out</button>
+        <button type="submit" name="local" formaction="Controller?command=goToMainPage" formmethod="post">Main page</button>
+        <button type="submit" name="local" formaction="Controller?command=goToRegistrationPage" formmethod="post">Registration</button>
+        <button type="submit" name="local" value="en" formaction="Controller?command=changeLanguage" formmethod="post">${en_button}</button>
+        <button type="submit" name="local" value="ru" formaction="Controller?command=changeLanguage" formmethod="post">${ru_button}</button>
     </form>
 </div>
 
 <br>
 <br>
-<br>
-<h3 align="center" class="form">List of films</h3>
-<table>
-    <tr>
-        <div >
-            <td>ID</td>
-            <td>Film name</td>
-            <td>Production year</td>
-            <td>Genre</td>
-            <td>Description</td>
-            <td></td>
-        </div>
-    </tr>
+<h2>List of films</h2>
+
+
+<div class="container">
+    <table>
+        <tr>
+            <div >
+                <th width="7%">ID</th>
+                <th width="13%">Film name</th>
+                <th width="10%">Production year</th>
+                <th width="10%">Genre</th>
+                <th width="50%">Description</th>
+                <th width="10%"></th>
+            </div>
+        </tr>
         <c:forEach items="${films}" var="film" varStatus="status">
             <tr>
                 <div>
@@ -68,17 +78,22 @@
                 </div>
             </tr>
         </c:forEach>
-</table>
 
-    <br>
-    <br>
+    </table>
 
-<div align="center">
-    <c:forEach items="${pageNumbers}" var="page" varStatus="status">
-        <a href="Controller?${URL}&pageNumber=${page}">${page}</a>
-    </c:forEach>
 </div>
 
+    <footer>
+        <div id="fut">
+            <ul>
+                <c:forEach items="${pageNumbers}" var="page" varStatus="status">
+                    <li>
+                        <a href="Controller?${URL}&pageNumber=${page}">${page}</a>
+                    </li>
+                </c:forEach>
+            </ul>
+        </div>
+    </footer>
 
 </body>
 </html>

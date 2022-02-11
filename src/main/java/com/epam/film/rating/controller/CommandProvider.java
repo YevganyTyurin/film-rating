@@ -10,6 +10,9 @@ public final class CommandProvider {
     private final Map<String, Command> commands = new HashMap<>();
 
     public CommandProvider() {
+        commands.put("goToAdminPage", new GoToAdminPage());
+        commands.put("goToFilmsChoicePage", new GoToFilmsChoicePage());
+
         commands.put("login", new Login());
         commands.put("registration", new Registration());
         commands.put("goToLoginPage", new GoToLoginPage());

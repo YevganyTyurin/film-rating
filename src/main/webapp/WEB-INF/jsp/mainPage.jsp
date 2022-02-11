@@ -6,8 +6,6 @@
 <html>
 <head>
 
-<%--    <link href="css/style.css" rel="stylesheet">--%>
-
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,7 +14,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/style2.css">
+    <link rel="stylesheet" href="css/style.css">
 
     <fmt:setLocale value="${sessionScope.local}" />
     <fmt:setBundle basename="local" var="loc" />
@@ -28,23 +26,9 @@
 </head>
 <body>
 
-<%--<h2 align="center">Hello username</h2>--%>
-
-<%--<div align="center">--%>
-<%--    <c:if test="${empty user}" var="testcif">--%>
-<%--        <form action="Controller?command=goToLoginPage" method="post" class="form">--%>
-<%--            <input type="submit" value="Log in" />--%>
-<%--        </form>--%>
-<%--        <form action="Controller?command=goToRegistrationPage" method="post">--%>
-<%--            <input type="submit" value="Registration" />--%>
-<%--        </form>--%>
-<%--        <br/>--%>
-<%--    </c:if>--%>
-<%--</div>--%>
-
 <div class="container">
     <form id="abc" action="Controller" class="abc" method="post">
-        <button type="submit" name="local" formaction="Controller?command=goToRegistrationPage" formmethod="post">Registration</button>
+        <button type="submit" name="local" formaction="Controller?command=goToFilmsChoicePage" formmethod="post">Films</button>
         <button type="submit" name="local" formaction="Controller?command=goToRegistrationPage" formmethod="post">Registration</button>
         <button type="submit" name="local" formaction="Controller?command=goToLoginPage" formmethod="post">Login</button>
         <button type="submit" name="local" value="en" formaction="Controller?command=changeLanguage" formmethod="post">${en_button}</button>

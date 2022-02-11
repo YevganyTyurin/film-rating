@@ -4,12 +4,19 @@
 
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
 
         <script src="https://code.jquery.com/jquery-1.10.2.js"
                 type="text/javascript"></script>
     <script src="js/showUserPage.js" type="text/javascript"></script>
-<%--    <link href="css/style.css" rel="stylesheet">--%>
 
     <fmt:setLocale value="${sessionScope.local}" />
     <fmt:setBundle basename="local" var="loc" />
@@ -20,14 +27,12 @@
 </head>
 <body>
 
-<br>
-<div align="right">
-    <form>
-        <button type="submit" name="local" value="en" formaction="Controller?command=changeLanguage" formmethod="post">${en_button}</button>
-
-        <button type="submit" name="local" value="ru" formaction="Controller?command=changeLanguage" formmethod="post">${ru_button}</button>
-
+<div class="container">
+    <form id="abc" action="Controller" class="abc" method="post">
+        <button type="submit" name="local" formaction="Controller?command=goToMainPage" formmethod="post">Main page</button>
         <button type="submit" formaction="Controller?command=logOut" formmethod="post">Log out</button>
+        <button type="submit" name="local" value="en" formaction="Controller?command=changeLanguage" formmethod="post">${en_button}</button>
+        <button type="submit" name="local" value="ru" formaction="Controller?command=changeLanguage" formmethod="post">${ru_button}</button>
     </form>
 </div>
 
@@ -36,12 +41,12 @@
 <table>
     <tr>
         <div >
-            <td>ID</td>
-            <td>name</td>
-            <td>surname</td>
-            <td>nickname</td>
-            <td>role</td>
-            <td>is banned</td>
+            <th width="7%">ID</th>
+            <th width="20%">name</th>
+            <th width="20%">surname</th>
+            <th width="20%">nickname</th>
+            <th width="20%">role</th>
+            <th width="13%">is banned</th>
         </div>
     </tr>
     <tr>
@@ -65,7 +70,7 @@
 </table>
 
 <br>
-<div align="center">
+<div>
     <button onclick="changeRole(document.getElementById('a').value)" id="changeRole">change role</button>
     <button onclick="ban(document.getElementById('c').value)" id="banUnban">
         <c:if test="${user.isBanned() eq true}">
@@ -75,7 +80,6 @@
             ban
         </c:if>
     </button>
-
 </div>
 
 </body>
