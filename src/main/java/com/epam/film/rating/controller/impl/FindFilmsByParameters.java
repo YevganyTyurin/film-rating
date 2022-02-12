@@ -36,6 +36,7 @@ public class FindFilmsByParameters implements Command {
 
         try {
             int pageNumber;
+            int filmAmount;
             List<Integer> pageNumbers;
             int amountOfPages = 0;
             int startFromRecordNumber;
@@ -60,8 +61,7 @@ public class FindFilmsByParameters implements Command {
 
             startFromRecordNumber = (AMOUNT_OF_RECORDS_ON_PAGE * pageNumber) - AMOUNT_OF_RECORDS_ON_PAGE;
 
-            int filmAmount = filmService.getFilmAmount(year, ageRating, filmType, genres);
-
+            filmAmount = filmService.getFilmAmount(year, ageRating, filmType, genres);
 
             if (filmAmount % AMOUNT_OF_RECORDS_ON_PAGE >= 1) {
                 amountOfPages = filmAmount / AMOUNT_OF_RECORDS_ON_PAGE;

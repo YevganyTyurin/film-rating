@@ -101,13 +101,81 @@ public class ReviewDAOImpl implements ReviewDAO {
                     System.out.println(review.getReview());
                 }
             }
-
+//TODO
+            //TODO
             return films;
         }catch (SQLException  e) {
             throw new DAOException(e);
         } finally {
             connectable.closeConnection(resultSet, preparedStatement, connection);
         }
+    }
+
+    @Override
+    public int getReviewAmount(String year, String age_rating, String film_type, String []genres, String filmId, String userId) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String sql = createSqlQueryAmountOfReviews(year, age_rating, film_type, genres, filmId, userId);
+        try {
+            connection = connectable.getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                return resultSet.getInt("reviewAmount"); //TODO
+            }
+            return 0;
+        }catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            connectable.closeConnection(resultSet, preparedStatement, connection);
+        }
+    }
+
+    private String createSqlQueryAmountOfReviews (String year, String age_rating, String film_type, String genres[], String filmId, String userId) {
+        StringBuilder filmParameters = new StringBuilder();
+
+        filmParameters.append("SELECT COUNT(review.id) as reviewAmount FROM film JOIN film_age_rating ON film.age_rating_id=film_age_rating.id JOIN film_type ON film.type_id=film_type.id JOIN review ON review.film_id=film.id JOIN user ON user.id=review.users_id WHERE 1=1");
+
+
+        if (year != null && year != "") {
+            System.out.println("year = " + year);
+            filmParameters.append(" AND film.production_year = '").append(year).append("'");
+        }
+
+        if (age_rating != null) {
+            filmParameters.append(" AND film_age_rating.age_rating = '").append(age_rating).append("'");
+        }
+
+        if (film_type != null) {
+            filmParameters.append(" AND film_type.type = '").append(film_type).append("'");
+        }
+
+        if (filmId != null && filmId != "") {
+            System.out.println("filmId = " + filmId);
+            filmParameters.append(" AND review.film_id = '").append(filmId).append("'");
+        }
+
+        if (userId != null && userId != "") {
+            System.out.println("userId = " + userId);
+            filmParameters.append(" AND review.users_id = '").append(userId).append("'");
+        }
+
+        if (genres != null) {
+            filmParameters.append(" AND film.id IN (SELECT film_genre.film_id FROM film_genre JOIN genre ON film_genre.genre_id=genre.id WHERE genre.genre in(");
+            for (int i = 0; i < genres.length; i++) {
+                filmParameters.append("'").append(genres[i]).append("'");
+                if (genres.length - i > 1) {
+                    filmParameters.append(", ");
+                }
+            }
+            filmParameters.append(") GROUP BY film_genre.film_id HAVING count(*) ='");
+            filmParameters.append(genres.length);
+            filmParameters.append("');");
+        }
+
+        System.out.println(filmParameters.toString());
+        return filmParameters.toString();
     }
 
     public String createSQL (String year, String age_rating, String film_type, String genres[], int startFromRecordNumber, String filmId, String userId) {

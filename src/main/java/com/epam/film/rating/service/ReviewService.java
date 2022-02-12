@@ -25,4 +25,6 @@ public interface ReviewService {
     boolean updateReview(int reviewId, String review) throws ServiceException;
 
     boolean deleteReview (int id) throws ServiceException;
+
+    int getReviewAmount(String year, String age_rating, String film_type, String []genres, String filmId, String userId) throws ServiceException;
 }

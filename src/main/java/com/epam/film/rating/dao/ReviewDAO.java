@@ -36,4 +36,6 @@ public interface ReviewDAO {
     boolean updateReview(int reviewId, String review) throws DAOException;
 
     boolean deleteReview (int id) throws DAOException;
+
+    int getReviewAmount(String year, String age_rating, String film_type, String []genres, String filmId, String userId) throws DAOException;
 }

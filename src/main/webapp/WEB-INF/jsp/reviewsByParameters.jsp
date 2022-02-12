@@ -57,5 +57,17 @@
         </c:forEach>
     </table>
 
+<footer>
+    <div id="fut">
+        <ul>
+            <c:forEach items="${pageNumbers}" var="page" varStatus="status">
+                <li>
+                    <a href="Controller?${URL}&pageNumber=${page}">${page}</a>
+                </li>
+            </c:forEach>
+        </ul>
+    </div>
+</footer>
+
 </body>
 </html>

@@ -1,10 +1,8 @@
 package com.epam.film.rating.controller.impl;
 
 import com.epam.film.rating.controller.Command;
-import com.epam.film.rating.dao.impl.ReviewDAOImpl;
 import com.epam.film.rating.entity.review.Review;
 import com.epam.film.rating.service.ReviewService;
-import com.epam.film.rating.service.Service;
 import com.epam.film.rating.service.ServiceFactory;
 import com.epam.film.rating.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
@@ -16,9 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class LeaveReview implements Command {
     private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.LeaveReview.class);

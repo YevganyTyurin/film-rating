@@ -1,17 +1,11 @@
 package com.epam.film.rating.controller.impl;
 
 import com.epam.film.rating.controller.Command;
-import com.epam.film.rating.dao.ReviewDAO;
-import com.epam.film.rating.dao.exception.DAOException;
-import com.epam.film.rating.dao.impl.FilmDAOImpl;
-import com.epam.film.rating.dao.impl.ReviewDAOImpl;
 import com.epam.film.rating.entity.ReviewDTO;
-import com.epam.film.rating.entity.film.Film;
 import com.epam.film.rating.entity.review.Review;
-import com.epam.film.rating.entity.user.User;
 import com.epam.film.rating.service.FilmService;
 import com.epam.film.rating.service.ReviewService;
-import com.epam.film.rating.service.Service;
+import com.epam.film.rating.service.DtoService;
 import com.epam.film.rating.service.ServiceFactory;
 import com.epam.film.rating.service.exception.ServiceException;
 import com.epam.film.rating.service.impl.ReviewServiceImpl;
@@ -23,8 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -49,7 +41,7 @@ public class GoToFilmDescriptionPage implements Command {
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         try{
             ServiceFactory instance = ServiceFactory.getInstance();
-            Service service = instance.getService();
+            DtoService dtoService = instance.getDtoService();
             FilmService filmService = instance.getFilmService();
 
             int filmId = Integer.parseInt(request.getParameter(parameterId));
@@ -61,7 +53,7 @@ public class GoToFilmDescriptionPage implements Command {
             Cookie filmIdCookie = new Cookie(FILM_ID, Integer.toString(filmId));
             response.addCookie(filmIdCookie);
 
-            List<ReviewDTO> ReviewsDTO = service.getReviewsByFilmId(filmId);
+            List<ReviewDTO> ReviewsDTO = dtoService.getReviewsByFilmId(filmId);
             request.setAttribute(reviews, ReviewsDTO);
 
             RequestDispatcher dispatcher = request.getRequestDispatcher(currentURL);

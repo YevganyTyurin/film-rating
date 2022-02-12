@@ -1,16 +1,6 @@
 package com.epam.film.rating.service;
 
-import com.epam.film.rating.dao.DAOFactory;
-import com.epam.film.rating.dao.FilmDAO;
-import com.epam.film.rating.dao.ReviewDAO;
-import com.epam.film.rating.dao.UserDAO;
-import com.epam.film.rating.dao.impl.FilmDAOImpl;
-import com.epam.film.rating.dao.impl.ReviewDAOImpl;
-import com.epam.film.rating.dao.impl.UserDAOImpl;
-import com.epam.film.rating.service.impl.FilmServiceImpl;
-import com.epam.film.rating.service.impl.ReviewApprovalImpl;
-import com.epam.film.rating.service.impl.ReviewServiceImpl;
-import com.epam.film.rating.service.impl.UserServiceImpl;
+import com.epam.film.rating.service.impl.*;
 
 public class ServiceFactory {
     private static final ServiceFactory instance = new ServiceFactory();
@@ -20,14 +10,14 @@ public class ServiceFactory {
     private final FilmService filmService;
     private final ReviewApprovalService reviewApprovalService;
 
-    private final Service service;
+    private final DtoService dtoService;
 
     private ServiceFactory() {
         userService = new UserServiceImpl();
         reviewService = new ReviewServiceImpl();
         filmService = new FilmServiceImpl();
         reviewApprovalService = new ReviewApprovalImpl();
-        service = new ServiceImpl();
+        dtoService = new DtoServiceImpl();
     }
 
     public ReviewApprovalService getReviewApprovalService() {
@@ -46,8 +36,8 @@ public class ServiceFactory {
         return userService;
     }
 
-    public Service getService() {
-        return service;
+    public DtoService getDtoService() {
+        return dtoService;
     }
 
     public static ServiceFactory getInstance() {

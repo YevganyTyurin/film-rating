@@ -108,4 +108,15 @@ public class ReviewServiceImpl implements ReviewService {
             throw new ServiceException(e);
         }
     }
+
+    @Override
+    public int getReviewAmount(String year, String age_rating, String film_type, String []genres, String filmId, String userId) throws ServiceException {
+        DAOFactory factory = DAOFactory.getInstance();
+        ReviewDAO reviewDAO = factory.getReviewDAO();
+        try {
+            return reviewDAO.getReviewAmount(year, age_rating, film_type, genres, filmId, userId);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
 }

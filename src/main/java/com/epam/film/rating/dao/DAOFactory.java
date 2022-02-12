@@ -1,9 +1,6 @@
 package com.epam.film.rating.dao;
 
-import com.epam.film.rating.dao.impl.FilmDAOImpl;
-import com.epam.film.rating.dao.impl.ReviewApprovalDAOImpl;
-import com.epam.film.rating.dao.impl.ReviewDAOImpl;
-import com.epam.film.rating.dao.impl.UserDAOImpl;
+import com.epam.film.rating.dao.impl.*;
 
 public class DAOFactory {
     private final static DAOFactory instance = new DAOFactory();
@@ -11,12 +8,14 @@ public class DAOFactory {
     private final FilmDAO filmDAO;
     private final ReviewDAO reviewDAO;
     private final ReviewApprovalDAO reviewApprovalDAO;
+    private final DtoDAO dtoDAO;
 
     private DAOFactory(){
         userDAO = new UserDAOImpl();
         filmDAO = new FilmDAOImpl();
         reviewDAO = new ReviewDAOImpl();
         reviewApprovalDAO = new ReviewApprovalDAOImpl();
+        dtoDAO = new DtoDAOImpl();
     }
 
     public ReviewApprovalDAO getReviewApprovalDAO() {return reviewApprovalDAO;}
@@ -31,6 +30,10 @@ public class DAOFactory {
 
     public ReviewDAO getReviewDAO() {
         return reviewDAO;
+    }
+
+    public DtoDAO getDtoDAO() {
+        return dtoDAO;
     }
 
     public static DAOFactory getInstance() {

@@ -4,7 +4,6 @@ import com.epam.film.rating.controller.Command;
 import com.epam.film.rating.entity.review.ReviewApproval;
 import com.epam.film.rating.service.ReviewApprovalService;
 import com.epam.film.rating.service.ReviewService;
-import com.epam.film.rating.service.Service;
 import com.epam.film.rating.service.ServiceFactory;
 import com.epam.film.rating.service.exception.ServiceException;
 
