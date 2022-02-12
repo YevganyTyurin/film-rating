@@ -1,7 +1,6 @@
 package com.epam.film.rating.controller.impl;
 
 import com.epam.film.rating.controller.Command;
-import com.epam.film.rating.dao.impl.ReviewDAOImpl;
 import com.epam.film.rating.entity.review.ReviewApproval;
 import com.epam.film.rating.service.ReviewApprovalService;
 import com.epam.film.rating.service.ReviewService;
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,46 +31,29 @@ public class Dislike implements Command {
             int userId = (Integer)session.getAttribute(userID);
 
             ServiceFactory instance = ServiceFactory.getInstance();
-            Service service = instance.getService();
             ReviewApprovalService reviewApprovalService = instance.getReviewApprovalService();
             ReviewService reviewService = instance.getReviewService();
 
             dislikesAmount = reviewService.getDislikesAmountById(reviewId);
             ReviewApproval reviewApproval = reviewApprovalService.getReviewApprovalById(userId, reviewId);
-//            ReviewApproval reviewApproval = service.getReviewApprovalById(userId, reviewId);
-            String dislikes = null;
             if(reviewApproval != null) {
 
                 if(reviewApproval.isDisliked()) {
                     reviewApprovalService.updateReviewApprovalDislike(false, userId, reviewId);
-
                     dislikesAmount--;
-                    reviewService.updateDislikesAmountById(dislikesAmount, reviewId);
-                    dislikes = Integer.toString(dislikesAmount);
-
-                } else if(reviewApproval.isLiked() ) {
-                    reviewApprovalService.updateReviewApprovalDislike(true, userId, reviewId);
-
-                    dislikesAmount++;
-                    reviewService.updateDislikesAmountById(dislikesAmount, reviewId);
-                    dislikes = Integer.toString(dislikesAmount);
                 } else {
                     reviewApprovalService.updateReviewApprovalDislike(true, userId, reviewId);
-
                     dislikesAmount++;
-                    reviewService.updateDislikesAmountById(dislikesAmount, reviewId);
-                    dislikes = Integer.toString(dislikesAmount);
+
                 }
             } else {
                 reviewApprovalService.addReviewApproval(userId, reviewId, false, true);
-
                 dislikesAmount++;
-                reviewService.updateDislikesAmountById(dislikesAmount, reviewId);
-                dislikes = Integer.toString(dislikesAmount);
             }
+            reviewService.updateDislikesAmountById(dislikesAmount, reviewId);
 
             response.setContentType("text/plain");
-            response.getWriter().write(dislikes);
+            response.getWriter().write(Integer.toString(dislikesAmount));
 
         } catch (ServiceException e) {
             logger.error("Exception in updating dislikes.", e);

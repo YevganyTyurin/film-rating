@@ -1,11 +1,9 @@
 package com.epam.film.rating.controller.impl;
 
 import com.epam.film.rating.controller.Command;
-import com.epam.film.rating.dao.impl.ReviewDAOImpl;
 import com.epam.film.rating.entity.review.ReviewApproval;
 import com.epam.film.rating.service.ReviewApprovalService;
 import com.epam.film.rating.service.ReviewService;
-import com.epam.film.rating.service.Service;
 import com.epam.film.rating.service.ServiceFactory;
 import com.epam.film.rating.service.exception.ServiceException;
 
@@ -14,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -35,52 +32,31 @@ public class Like implements Command {
 
         try {
             ServiceFactory instance = ServiceFactory.getInstance();
-            Service service = instance.getService();
             ReviewApprovalService reviewApprovalService = instance.getReviewApprovalService();
-
-            ReviewService reviewService = instance.getReviewService(); //TODO
+            ReviewService reviewService = instance.getReviewService();
 
             likeAmount = reviewService.getLikesAmountById(reviewId);
-//            ReviewApproval reviewApproval = service.getReviewApprovalById(userId, reviewId);
             ReviewApproval reviewApproval = reviewApprovalService.getReviewApprovalById(userId, reviewId);
-            String likes = null;
             if(reviewApproval != null) {
                 if(reviewApproval.isLiked()) {
                     // cancel like
                     reviewApprovalService.updateReviewApprovalLike(false, userId, reviewId);
-
                     likeAmount--;
-                    reviewService.updateLikesAmountById(likeAmount, reviewId);
-                    likes = Integer.toString(likeAmount);
-
-                } else if(reviewApproval.isDisliked() ) {
-                    //do like
-                    reviewApprovalService.updateReviewApprovalLike(true, userId, reviewId);
-
-                    likeAmount++;
-                    reviewService.updateLikesAmountById(likeAmount, reviewId);
-                    likes = Integer.toString(likeAmount);
 
                 } else {
                     //do like
                     reviewApprovalService.updateReviewApprovalLike(true, userId, reviewId);
-
                     likeAmount++;
-                    reviewService.updateLikesAmountById(likeAmount, reviewId);
-                    likes = Integer.toString(likeAmount);
                 }
             } else {
                 //do instance with like
                 reviewApprovalService.addReviewApproval(userId, reviewId, true, false);
-
                 likeAmount++;
-                reviewService.updateLikesAmountById(likeAmount, reviewId);
-                likes = Integer.toString(likeAmount);
             }
+            reviewService.updateLikesAmountById(likeAmount, reviewId);
 
             response.setContentType("text/plain");
-            response.getWriter().write(likes);
-
+            response.getWriter().write(Integer.toString(likeAmount));
 
         } catch (ServiceException e) {
             logger.error("Exception with updating like.", e);
