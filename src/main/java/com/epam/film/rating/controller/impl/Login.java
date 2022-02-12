@@ -39,16 +39,15 @@ public class Login implements Command {
         String password = request.getParameter(parameterPassword);
 
         ServiceFactory instance = ServiceFactory.getInstance();
-        UserService service = instance.getUserService();
-
+        UserService userService = instance.getUserService();
 
         try {
-//            User user = service.login(login, password);
-            User user = service.login2(login);
+            if(userService.validateUserLogin(login, password)) {
+                //throw ex
+            }
+            User user = userService.login2(login);
 
             boolean isCheckedPassword = Password.checkPassword(password, user.getPassword());
-
-
 
             if(user != null && isCheckedPassword) {
                 HttpSession session = request.getSession();
@@ -60,18 +59,15 @@ public class Login implements Command {
                 if (user.getRole().equals(Role.USER)) {
                     user = null;
                     session.setAttribute(URL, userURL);
-//                    RequestDispatcher dispatcher = request.getRequestDispatcher(userPageURL);
-//                    dispatcher.forward(request, response);
                     response.sendRedirect("Controller?command=goToMainPage");
 
                 } else if (user.getRole().equals(Role.ADMINISTRATOR)) {
                     user = null;
                     session.setAttribute(URL, adminURL);
-//                    RequestDispatcher dispatcher = request.getRequestDispatcher(adminPageURL);
-//                    dispatcher.forward(request, response);
                     response.sendRedirect("Controller?command=goToAdminPage");
                 }
             }
+
         } catch (ServiceException e) {
             logger.error("Exception with leaving review.", e);
             //TODO exception page

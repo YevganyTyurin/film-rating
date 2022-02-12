@@ -53,9 +53,8 @@ public class UserValidator {
                 validateEmail(user.geteMail());
     }
 
-    public boolean validateUserLogin(User user) {
-        return validateLogin(user.getLogin()) &&
-                validatePassword(user.getPassword());
+    public boolean validateUserLogin(String login, String password) {
+        return validateLogin(login) && validatePassword(password);
     }
 
     private boolean isBasicValidated(String parameter) {

@@ -52,8 +52,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public boolean validateUserLogin(User user) {
-        return userValidator.validateUserLogin(user);
+    public boolean validateUserLogin(String login, String password) {
+        return userValidator.validateUserLogin(login, password);
     }
 
     @Override

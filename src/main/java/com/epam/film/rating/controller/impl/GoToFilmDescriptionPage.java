@@ -68,7 +68,7 @@ public class GoToFilmDescriptionPage implements Command {
     private void setPermissionToReview(HttpServletRequest request, int filmId) throws ServiceException {
         ServiceFactory instance = ServiceFactory.getInstance();
 
-        ReviewService reviewService = new ReviewServiceImpl();
+        ReviewService reviewService = instance.getReviewService();
 
         HttpSession session = request.getSession();
 

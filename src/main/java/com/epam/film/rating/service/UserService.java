@@ -22,7 +22,7 @@ public interface UserService {
 
     boolean validateUserRegistration(User user);
 
-    boolean validateUserLogin(User user);
+    boolean validateUserLogin(String login, String password);
 
     User login(String login, String password) throws ServiceException;
     User login2(String login) throws ServiceException;
