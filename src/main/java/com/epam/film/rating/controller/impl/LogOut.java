@@ -9,9 +9,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Enumeration;
+import java.util.Locale;
 
 public class LogOut implements Command {
     public final String currentURL = "/WEB-INF/jsp/mainPage.jsp";
+
+    public final String IS_BANNED = "isBaned";
+    public final String USER_ROLE = "userRole";
+    public final String USER_ID = "email";
+    public final String URL = "URL";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -22,10 +28,10 @@ public class LogOut implements Command {
 
         HttpSession session = request.getSession();
 
-        Enumeration<String> attributes = session.getAttributeNames();
-        while (attributes.hasMoreElements()) {
-            session.removeAttribute(attributes.nextElement());
-        }
+        session.removeAttribute(IS_BANNED);
+        session.removeAttribute(USER_ROLE);
+        session.removeAttribute(USER_ID);
+        session.removeAttribute(URL);
 
         request.getRequestDispatcher(currentURL).forward(request, response);
     }

@@ -18,14 +18,14 @@ public class UpdateReview implements Command {
     private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.UpdateReview.class);
     public final String currentURL = "/WEB-INF/jsp/filmDescription.jsp";
     public final String URL = "URL";
-    public final String ID = "id";
+    public final String REVIEW_ID = "reviewId";
     public final String REVIEW = "review";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         try {
-            int reviewId = Integer.parseInt(request.getParameter(ID));
+            int reviewId = Integer.parseInt(request.getParameter(REVIEW_ID));
             String review = request.getParameter(REVIEW);
 
             ServiceFactory instance = ServiceFactory.getInstance();

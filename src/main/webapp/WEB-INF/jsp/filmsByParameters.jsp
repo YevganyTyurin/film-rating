@@ -83,7 +83,7 @@
                     <c:if test="${not empty userRole}">
                         <td>
                             <form action="Controller?command=goToFilmDescriptionPage" id="${status.index}" method="post" >
-                                <button type="submit" name="id" value="${film.id}">Show film</button>
+                                <button type="submit" name="filmId" value="${film.id}">Show film</button>
                             </form>
                         </td>
                     </c:if>

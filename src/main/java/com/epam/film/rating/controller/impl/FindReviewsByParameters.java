@@ -21,9 +21,9 @@ import java.util.List;
 public class FindReviewsByParameters implements Command {
     private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.FindReviewsByParameters.class);
 
-    public final String parameterUserId = "userId";
-    public final String parameterFilmId = "filmId";
-    public final String parameterYear = "year";
+    public final String USER_ID = "userId";
+    public final String FILM_ID = "filmId";
+    public final String PRODUCTION_YEAR = "productionYear";
     public final String parameterAgeRating = "age_rating";
     public final String parameterType = "type";
     public final String parameterGenre = "genre";
@@ -54,9 +54,9 @@ public class FindReviewsByParameters implements Command {
 
             response.setContentType("text/html");
 
-            String userId = request.getParameter(parameterFilmId);
-            String filmId = request.getParameter(parameterUserId);
-            String year = request.getParameter(parameterYear);
+            String userId = request.getParameter(FILM_ID);
+            String filmId = request.getParameter(USER_ID);
+            String year = request.getParameter(PRODUCTION_YEAR);
             String ageRating = request.getParameter(parameterAgeRating);
             String filmType = request.getParameter(parameterType);
             String []genres = request.getParameterValues(parameterGenre);

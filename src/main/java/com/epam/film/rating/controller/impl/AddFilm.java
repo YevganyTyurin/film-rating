@@ -22,17 +22,14 @@ import org.apache.logging.log4j.Logger;
 
 public class AddFilm implements Command {
     private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.AddFilm.class);
-    public final String parameterYear = "year";
-    public final String parameterAgeRating = "age_rating";
-    public final String parameterType = "type";
-    public final String parameterGenre = "genre";
-    public final String year = "productionYear";
-    public final String filmDescription = "description";
-    public final String name = "filmName";
+    public final String PRODUCTION_YEAR = "productionYear";
+    public final String AGE_RATING = "age_rating";
+    public final String TYPE = "type";
+    public final String GENRE = "genre";
+    public final String FILM_DESCRIPTION = "description";
+    public final String FILM_NAME = "filmName";
 
-    public final String id = "id";
-
-
+    public final String currentURL = "/WEB-INF/jsp/adminmainpage.jsp";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -41,20 +38,23 @@ public class AddFilm implements Command {
             ServiceFactory instance = ServiceFactory.getInstance();
             FilmService filmService = instance.getFilmService();
 
-            String age_rating = request.getParameter(parameterAgeRating);
-            String filmType = request.getParameter(parameterType);
-            String genres[] = request.getParameterValues(parameterGenre);
-            String description = request.getParameter(filmDescription);
-            String filmName = request.getParameter(name);
-            int productionYear = Integer.parseInt(request.getParameter(year));
+            String ageRating = request.getParameter(AGE_RATING);
+            String filmType = request.getParameter(TYPE);
+            String genres[] = request.getParameterValues(GENRE);
+            String description = request.getParameter(FILM_DESCRIPTION);
+            String filmName = request.getParameter(FILM_NAME);
+            int productionYear = Integer.parseInt(request.getParameter(PRODUCTION_YEAR));
 
 
-            int ageRatingId = filmService.getAgeRatingId(age_rating);
+            int ageRatingId = filmService.getAgeRatingId(ageRating);
             int filmTypeId = filmService.getFilmTypeId(filmType);
 
             filmService.addFilm(filmName, productionYear, description, ageRatingId, filmTypeId);
 
             addFilmGenres(genres, filmName, productionYear);
+
+            RequestDispatcher dispatcher = request.getRequestDispatcher(currentURL);
+            dispatcher.forward(request, response);
 
         } catch (ServiceException e) {
             logger.error("Exception in adding film.", e);

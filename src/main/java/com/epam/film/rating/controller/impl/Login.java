@@ -21,13 +21,14 @@ import org.apache.logging.log4j.Logger;
 public class Login implements Command {
     private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.Login.class);
 
-    public final String parameterLogin = "login";
-    public final String parameterPassword = "password";
+    public final String LOGIN = "login";
+    public final String PASSWORD = "password";
     public final String adminPageURL = "/WEB-INF/jsp/adminmainpage.jsp";
     public final String userPageURL = "/WEB-INF/jsp/userMainPage.jsp";
     public final String mainPageURL = "/WEB-INF/jsp/mainPage.jsp";
-    public final String userRoleAttribute = "userRole";
-    public final String userIdAttribute = "userId";
+    public final String ATTRIBUTE_USER_ROLE = "userRole";
+    public final String ATTRIBUTE_USER_ID = "userId";
+    public final String ATTRIBUTE_IS_BANNED = "isBanned";
 
     public final String userURL = "/WEB-INF/jsp/userMainPage.jsp";
     public final String adminURL = "/WEB-INF/jsp/adminmainpage.jsp";
@@ -36,8 +37,8 @@ public class Login implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String login = request.getParameter(parameterLogin);
-        String password = request.getParameter(parameterPassword);
+        String login = request.getParameter(LOGIN);
+        String password = request.getParameter(PASSWORD);
 
         ServiceFactory instance = ServiceFactory.getInstance();
         UserService userService = instance.getUserService();
@@ -53,9 +54,9 @@ public class Login implements Command {
             if(user != null && isCheckedPassword) {
                 HttpSession session = request.getSession();
 
-                session.setAttribute(userIdAttribute, user.getId());
-                session.setAttribute(userRoleAttribute, user.getRole());
-                session.setAttribute("isBanned", user.isBanned());
+                session.setAttribute(ATTRIBUTE_USER_ID, user.getId());
+                session.setAttribute(ATTRIBUTE_USER_ROLE, user.getRole());
+                session.setAttribute(ATTRIBUTE_IS_BANNED, user.isBanned());
 
                 if (user.getRole().equals(Role.USER) && !user.isBanned()) {
                     user = null;

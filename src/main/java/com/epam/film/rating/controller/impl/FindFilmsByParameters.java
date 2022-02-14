@@ -20,15 +20,16 @@ import java.util.List;
 public class FindFilmsByParameters implements Command {
     private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.FindFilmsByParameters.class);
 
-    public final String parameterYear = "year";
-    public final String parameterAgeRating = "age_rating";
-    public final String parameterType = "type";
-    public final String parameterGenre = "genre";
+    public final String PRODUCTION_YEAR = "productionYear";
     public final String currentURL = "/WEB-INF/jsp/filmsByParameters.jsp";
-    public final String attributeFilms = "films";
+    public final String ATTRIBUTE_FILMS = "films";
     public final String URL = "URL";
     public final String PAGE_NUMBER = "pageNumber";
-    public final String PAGE_NUMBERS = "pageNumbers";
+    public final String ATTRIBUTE_PAGE_NUMBERS = "pageNumbers";
+
+    public final String AGE_RATING = "age_rating";
+    public final String TYPE = "type";
+    public final String GENRE = "genre";
 
     private static final int AMOUNT_OF_RECORDS_ON_PAGE = 2;
 
@@ -51,10 +52,10 @@ public class FindFilmsByParameters implements Command {
 
             response.setContentType("text/html");
 
-            String year = request.getParameter(parameterYear);
-            String ageRating = request.getParameter(parameterAgeRating);
-            String filmType = request.getParameter(parameterType);
-            String []genres = request.getParameterValues(parameterGenre);
+            String year = request.getParameter(PRODUCTION_YEAR);
+            String ageRating = request.getParameter(AGE_RATING);
+            String filmType = request.getParameter(TYPE);
+            String []genres = request.getParameterValues(GENRE);
 
             if(request.getParameter(PAGE_NUMBER) == null) {
                 pageNumber = 1;
@@ -80,11 +81,11 @@ public class FindFilmsByParameters implements Command {
                 pageNumbers.add(i);
             }
 
-            request.setAttribute(PAGE_NUMBERS, pageNumbers);
+            request.setAttribute(ATTRIBUTE_PAGE_NUMBERS, pageNumbers);
 
             List<Film> films = filmService.getFilmsByParameters(year, ageRating, filmType, genres, startFromRecordNumber);
 
-            request.setAttribute(attributeFilms, films);
+            request.setAttribute(ATTRIBUTE_FILMS, films);
 
             RequestDispatcher dispatcher = request.getRequestDispatcher(currentURL);
             dispatcher.forward(request, response);

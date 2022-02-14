@@ -33,7 +33,6 @@ public class ChangeLanguage implements Command{
             if (cookie.getName().equals("command")) {
                 url.append(cookie.getValue());
 
-                System.out.println("my URL = " + url.toString());
                 break;
             }
         }

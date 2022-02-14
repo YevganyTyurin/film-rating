@@ -13,7 +13,11 @@ import java.io.IOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+
+
 public class ActivateAccount implements Command {
+    public final String ID = "id";
+
     private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.ActivateAccount.class);
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -22,7 +26,7 @@ public class ActivateAccount implements Command {
             ServiceFactory instance = ServiceFactory.getInstance();
             UserService userService = instance.getUserService();
 
-            int userId = Integer.parseInt(request.getParameter("id"));
+            int userId = Integer.parseInt(request.getParameter(ID));
             userService.updateIsBanned(userId, false);
 
 

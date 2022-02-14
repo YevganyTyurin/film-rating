@@ -26,15 +26,15 @@ public class GoToFilmDescriptionPage implements Command {
     private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.GoToFilmDescriptionPage.class);
 
     public final String currentURL = "/WEB-INF/jsp/filmDescription.jsp";
-    public final String parameterId = "id";
-    public final String userId = "userId";
+    public final String ID = "id";
+    public final String USER_ID = "userId";
     public final String URL = "URL";
     public final String permission = "permission";
-    public final String film = "film";
+    public final String ATTRIBUTE_FILM = "film";
     public final String FILM_ID = "filmId";
     public final String PERMISSION_TRUE = "true";
     public final String PERMISSION_FALSE = "false";
-    public final String reviews = "reviews";
+    public final String ATTRIBUTE_REVIEWS = "reviews";
 
 
     @Override
@@ -48,9 +48,9 @@ public class GoToFilmDescriptionPage implements Command {
             response.addCookie(queryString);
             //TODO flag
 
-            int filmId = Integer.parseInt(request.getParameter(parameterId));
+            int filmId = Integer.parseInt(request.getParameter(FILM_ID));
 
-            request.setAttribute(film, filmService.getFilmById(filmId));
+            request.setAttribute(ATTRIBUTE_FILM, filmService.getFilmById(filmId));
 
             setPermissionToReview(request, filmId);
 
@@ -58,7 +58,7 @@ public class GoToFilmDescriptionPage implements Command {
             response.addCookie(filmIdCookie);
 
             List<ReviewDTO> ReviewsDTO = dtoService.getReviewsByFilmId(filmId);
-            request.setAttribute(reviews, ReviewsDTO);
+            request.setAttribute(ATTRIBUTE_REVIEWS, ReviewsDTO);
 
             RequestDispatcher dispatcher = request.getRequestDispatcher(currentURL);
             dispatcher.forward(request, response);
@@ -79,7 +79,7 @@ public class GoToFilmDescriptionPage implements Command {
 
         HttpSession session = request.getSession();
 
-        int id = (Integer)session.getAttribute(userId);
+        int id = (Integer)session.getAttribute(USER_ID);
 
         List<Review> reviews = reviewService.getReviewById(filmId, id);
         if (reviews.isEmpty()) {

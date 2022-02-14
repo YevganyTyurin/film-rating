@@ -18,17 +18,17 @@ import org.apache.logging.log4j.Logger;
 
 public class Dislike implements Command {
     private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.Dislike.class);
-    public final String id = "id";
-    public final String userID = "userId";
+    public final String ID = "id";
+    public final String USER_ID = "userId";
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        int reviewId = Integer.parseInt(request.getParameter(id));
+        int reviewId = Integer.parseInt(request.getParameter(ID));
         int dislikesAmount;
 
         try {
             HttpSession session = request.getSession();
-            int userId = (Integer)session.getAttribute(userID);
+            int userId = (Integer)session.getAttribute(USER_ID);
 
             ServiceFactory instance = ServiceFactory.getInstance();
             ReviewApprovalService reviewApprovalService = instance.getReviewApprovalService();

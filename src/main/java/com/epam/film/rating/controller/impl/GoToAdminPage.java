@@ -21,9 +21,6 @@ public class GoToAdminPage implements Command {
         response.addCookie(queryString);
         //TODO flag
 
-//        HttpSession session = request.getSession();
-//        session.setAttribute(URL, currentURL);
-
         RequestDispatcher dispatcher = request.getRequestDispatcher(currentURL);
         dispatcher.forward(request, response);
     }

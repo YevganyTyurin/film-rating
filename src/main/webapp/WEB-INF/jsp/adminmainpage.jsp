@@ -59,7 +59,7 @@
             <br>
             <div class="inputs">
                 <label>Production Year: </label>
-                <input type="number" name="year" value="production year"/>
+                <input type="number" name="productionYear" value="production year"/>
             </div>
             <br>
             <label>Age Rating: </label>

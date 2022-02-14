@@ -17,7 +17,7 @@ function changeReview(a, b) {
     $.ajax({
         url : 'Controller?command=updateReview',
         data : {
-            id : a,
+            reviewId : a,
             review: b
         },
         async: false,

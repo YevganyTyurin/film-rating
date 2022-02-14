@@ -15,12 +15,12 @@ import org.apache.logging.log4j.Logger;
 
 public class ChangeUserIsBanned implements Command {
     private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.ChangeUserIsBanned.class);
-    public final String id = "id";
+    public final String ID = "id";
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        int userId = Integer.parseInt(request.getParameter(id));
+        int userId = Integer.parseInt(request.getParameter(ID));
 
         try {
             ServiceFactory instance = ServiceFactory.getInstance();

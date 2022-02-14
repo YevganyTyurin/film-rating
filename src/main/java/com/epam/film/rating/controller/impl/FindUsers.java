@@ -22,9 +22,8 @@ public class FindUsers implements Command {
     private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.FindUsers.class);
 
     public final String URL = "URL";
-    public final String id = "userId";
+    public final String USER_ID = "userId";
     public final String nickname = "userNickname";
-    public final String userID = "userId";
     public final String currentURL = "/WEB-INF/jsp/showUserPage.jsp";
     public final String USER = "user";
 
@@ -38,7 +37,7 @@ public class FindUsers implements Command {
         response.addCookie(queryString);
         //TODO flag
 
-        int userId = Integer.parseInt(request.getParameter(id));
+        int userId = Integer.parseInt(request.getParameter(USER_ID));
 
         ServiceFactory instance = ServiceFactory.getInstance();
         UserService userService = instance.getUserService();
