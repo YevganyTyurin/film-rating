@@ -23,6 +23,8 @@
     <fmt:message bundle="${loc}" key="local.locbutton.name.ru" var="ru_button" />
     <fmt:message bundle="${loc}" key="local.locbutton.name.en" var="en_button" />
 
+    <fmt:message bundle="${loc}" key="local.locbutton.blocking" var="ban" />
+
 </head>
 <body>
 
@@ -35,6 +37,21 @@
         <button type="submit" name="local" value="ru" formaction="Controller?command=changeLanguage" formmethod="post">${ru_button}</button>
     </form>
 </div>
+
+
+<br>
+
+<h2>${ban}</h2>
+
+<c:if test="${not empty systemMessage}">
+<%--    <h2>${systemMessage}</h2>--%>
+    <h2>${ban}</h2>
+</c:if>
+
+<c:if test="${not empty systemMessage}">
+    <%--    <h2>${systemMessage}</h2>--%>
+    <h2>11111</h2>
+</c:if>
 
 </body>
 </html>

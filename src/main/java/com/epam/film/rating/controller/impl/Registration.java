@@ -96,7 +96,8 @@ public class Registration implements Command {
 
         } catch (ServiceException e) {
             logger.error("Exception in registration.", e);
-            //TODO exception page
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+            dispatcher.forward(request, response);
         }
     }
 }

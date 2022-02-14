@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -47,6 +48,9 @@ public class FindReviewsByParameters implements Command {
             ServiceFactory instance = ServiceFactory.getInstance();
             ReviewService reviewService = instance.getReviewService();
             DtoService dtoService = instance.getDtoService();
+
+            Cookie queryString = new Cookie("command", request.getQueryString());
+            response.addCookie(queryString);
 
             response.setContentType("text/html");
 
@@ -92,7 +96,8 @@ public class FindReviewsByParameters implements Command {
 
         } catch (ServiceException e) {
             logger.error("Exception with finding reviews by parameters request.", e);
-            //TODO exception page
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+            dispatcher.forward(request, response);
         }
     }
 }

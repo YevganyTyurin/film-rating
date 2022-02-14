@@ -10,6 +10,7 @@ import com.epam.film.rating.service.exception.ServiceException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -30,15 +31,17 @@ public class FindUsers implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        HttpSession session = request.getSession();
-        session.setAttribute(URL, currentURL);
+//        HttpSession session = request.getSession();
+//        session.setAttribute(URL, currentURL);
+
+        Cookie queryString = new Cookie("command", request.getQueryString());
+        response.addCookie(queryString);
+        //TODO flag
 
         int userId = Integer.parseInt(request.getParameter(id));
 
         ServiceFactory instance = ServiceFactory.getInstance();
         UserService userService = instance.getUserService();
-//
-//        UserDAOImpl userDAO = new UserDAOImpl();
 
         try {
             User user = userService.findById(userId);
@@ -49,7 +52,8 @@ public class FindUsers implements Command {
             dispatcher.forward(request, response);
         } catch (ServiceException e) {
             logger.error("Exception with finding user by id.", e);
-            //TODO exception page
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+            dispatcher.forward(request, response);
         }
     }
 }

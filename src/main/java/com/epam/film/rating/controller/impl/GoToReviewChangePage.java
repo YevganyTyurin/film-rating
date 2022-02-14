@@ -7,6 +7,7 @@ import com.epam.film.rating.service.exception.ServiceException;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,8 +24,11 @@ public class GoToReviewChangePage implements Command {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        HttpSession session = request.getSession();
-        session.setAttribute(URL, loginURL);
+//        HttpSession session = request.getSession();
+//        session.setAttribute(URL, loginURL);
+
+        Cookie queryString = new Cookie("command", request.getQueryString());
+        response.addCookie(queryString);
 
         ServiceFactory instance = ServiceFactory.getInstance();
         ReviewService reviewService = instance.getReviewService();
@@ -38,9 +42,12 @@ public class GoToReviewChangePage implements Command {
 
             RequestDispatcher dispatcher = request.getRequestDispatcher(loginURL);
             dispatcher.forward(request, response);
+
+            //TODO
         } catch (ServiceException e) {
             logger.error("Exception with finding review by review id.", e);
-            //TODO exception page
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+            dispatcher.forward(request, response);
         }
     }
 }

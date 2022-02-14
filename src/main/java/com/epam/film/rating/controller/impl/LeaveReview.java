@@ -8,6 +8,7 @@ import com.epam.film.rating.service.exception.ServiceException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -53,7 +54,8 @@ public class LeaveReview implements Command {
             response.getWriter().write(result);
         } catch (ServiceException e) {
             logger.error("Exception with leaving review.", e);
-            //TODO exception page
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+            dispatcher.forward(request, response);
         }
 
     }

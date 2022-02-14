@@ -44,6 +44,10 @@ public class GoToFilmDescriptionPage implements Command {
             DtoService dtoService = instance.getDtoService();
             FilmService filmService = instance.getFilmService();
 
+            Cookie queryString = new Cookie("command", request.getQueryString());
+            response.addCookie(queryString);
+            //TODO flag
+
             int filmId = Integer.parseInt(request.getParameter(parameterId));
 
             request.setAttribute(film, filmService.getFilmById(filmId));
@@ -59,9 +63,12 @@ public class GoToFilmDescriptionPage implements Command {
             RequestDispatcher dispatcher = request.getRequestDispatcher(currentURL);
             dispatcher.forward(request, response);
 
+            //TODO
+
         } catch (ServiceException e) {
             logger.error("Exception with getting review by film id.", e);
-            //TODO exception page
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+            dispatcher.forward(request, response);
         }
     }
 

@@ -7,6 +7,7 @@ import com.epam.film.rating.service.ServiceFactory;
 import com.epam.film.rating.service.UserService;
 import com.epam.film.rating.service.exception.ServiceException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -56,21 +57,26 @@ public class Login implements Command {
                 session.setAttribute(userRoleAttribute, user.getRole());
                 session.setAttribute("isBanned", user.isBanned());
 
-                if (user.getRole().equals(Role.USER)) {
+                if (user.getRole().equals(Role.USER) && !user.isBanned()) {
                     user = null;
                     session.setAttribute(URL, userURL);
                     response.sendRedirect("Controller?command=goToMainPage");
 
-                } else if (user.getRole().equals(Role.ADMINISTRATOR)) {
+                } else if (user.getRole().equals(Role.ADMINISTRATOR) && !user.isBanned()) {
                     user = null;
                     session.setAttribute(URL, adminURL);
                     response.sendRedirect("Controller?command=goToAdminPage");
+                } else {
+                    user = null;
+                    session.setAttribute(URL, "/WEB-INF/jsp/mainPage.jsp");
+                    response.sendRedirect("Controller?command=goToMainPage");
                 }
             }
 
         } catch (ServiceException e) {
             logger.error("Exception with leaving review.", e);
-            //TODO exception page
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+            dispatcher.forward(request, response);
         }
     }
 }

@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -40,6 +41,10 @@ public class FindFilmsByParameters implements Command {
             List<Integer> pageNumbers;
             int amountOfPages = 0;
             int startFromRecordNumber;
+
+            Cookie queryString = new Cookie("command", request.getQueryString());
+            response.addCookie(queryString);
+            //TODO flag
 
             ServiceFactory instance = ServiceFactory.getInstance();
             FilmService filmService = instance.getFilmService();
@@ -86,7 +91,8 @@ public class FindFilmsByParameters implements Command {
 
         } catch (ServiceException e) {
             logger.error("Exception with finding films by parameters request.", e);
-            //TODO exception
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+            dispatcher.forward(request, response);
         }
     }
 }

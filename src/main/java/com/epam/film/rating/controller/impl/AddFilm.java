@@ -10,6 +10,7 @@ import com.epam.film.rating.service.ServiceFactory;
 import com.epam.film.rating.service.UserService;
 import com.epam.film.rating.service.exception.ServiceException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -57,7 +58,8 @@ public class AddFilm implements Command {
 
         } catch (ServiceException e) {
             logger.error("Exception in adding film.", e);
-//            TODO exception
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+            dispatcher.forward(request, response);
         }
     }
 
@@ -76,7 +78,6 @@ public class AddFilm implements Command {
             }
         } catch (ServiceException e) {
             logger.error("Exception in adding film genres relations.", e);
-//            TODO exception
         }
 
 

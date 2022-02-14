@@ -50,12 +50,22 @@
     <table>
         <tr>
             <div >
-                <th width="7%">ID</th>
-                <th width="13%">Film name</th>
-                <th width="10%">Production year</th>
-                <th width="10%">Genre</th>
-                <th width="50%">Description</th>
-                <th width="10%"></th>
+                <c:if test="${not empty userRole}">
+                    <th width="7%">ID</th>
+                    <th width="13%">Film name</th>
+                    <th width="10%">Production year</th>
+                    <th width="10%">Genre</th>
+                    <th width="50%">Description</th>
+                    <th width="10%"></th>
+                </c:if>
+
+                <c:if test="${empty userRole}">
+                    <th width="9%">ID</th>
+                    <th width="15%">Film name</th>
+                    <th width="12%">Production year</th>
+                    <th width="12%">Genre</th>
+                    <th width="52%">Description</th>
+                </c:if>
             </div>
         </tr>
         <c:forEach items="${films}" var="film" varStatus="status">
@@ -70,11 +80,13 @@
                         </c:forEach>
                     </td>
                     <td>${film.description}</td>
-                    <td>
-                        <form action="Controller?command=goToFilmDescriptionPage" id="${status.index}" method="post" >
-                            <button type="submit" name="id" value="${film.id}">Show film</button>
-                        </form>
-                    </td>
+                    <c:if test="${not empty userRole}">
+                        <td>
+                            <form action="Controller?command=goToFilmDescriptionPage" id="${status.index}" method="post" >
+                                <button type="submit" name="id" value="${film.id}">Show film</button>
+                            </form>
+                        </td>
+                    </c:if>
                 </div>
             </tr>
         </c:forEach>

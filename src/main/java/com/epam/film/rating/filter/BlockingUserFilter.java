@@ -31,6 +31,15 @@ public class BlockingUserFilter implements Filter{
         commands.add("findUsers");
         commands.add("changeUserRole");
         commands.add("addFilm");
+        commands.add("goToAdminPage");
+        commands.add("goToFilmsChoicePage");
+        commands.add("login");
+        commands.add("registration");
+        commands.add("goToLoginPage");
+        commands.add("goToRegistrationPage");
+        commands.add("changeUserRole");
+        commands.add("activateAccount");
+        commands.add("goToMainPage");
     }
 
     @Override
@@ -50,11 +59,19 @@ public class BlockingUserFilter implements Filter{
             int startOfString = urlQuery.indexOf("=") + 1;
             String substringOfURL = urlQuery.substring(startOfString, endOfString);
 
+            System.out.println("substringOfURL = " + substringOfURL);
+
             if (commands.toString().contains(substringOfURL) && request.getSession().getAttribute("userRole") == Role.USER) {
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userMainPage.jsp");
+//                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/userMainPage.jsp");
+//                RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+                request.setAttribute("systemMessage", "Your account is blocked");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/mainPage.jsp");
                 dispatcher.forward(request, servletResponse);
             } else if (commands.toString().contains(substringOfURL) && request.getSession().getAttribute("userRole") == Role.ADMINISTRATOR){
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/adminmainpage.jsp");
+//                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/adminmainpage.jsp");
+                request.setAttribute("systemMessage", "Your account is blocked");
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/mainPage.jsp");
+//                RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
                 dispatcher.forward(request, servletResponse);
             } else {
                 filterChain.doFilter(servletRequest, servletResponse);
