@@ -50,7 +50,7 @@
             <td>${review.review}</td>
             <td>
                 <form action="Controller?command=goToReviewChangePage" method="post" >
-                    <button type="submit" name="id" value="${review.reviewId}">Change review</button>
+                    <button type="submit" name="reviewId" value="${review.reviewId}">Change review</button>
                 </form>
             </td>
         </tr>

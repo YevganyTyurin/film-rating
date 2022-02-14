@@ -1,6 +1,9 @@
 package com.epam.film.rating.controller.impl;
 
 import com.epam.film.rating.controller.Command;
+import com.epam.film.rating.controller.constant.JSPPath;
+import com.epam.film.rating.controller.constant.LoggerMessage;
+import com.epam.film.rating.controller.constant.Parameter;
 import com.epam.film.rating.entity.review.Review;
 import com.epam.film.rating.service.ReviewService;
 import com.epam.film.rating.service.ServiceFactory;
@@ -19,21 +22,16 @@ import java.io.IOException;
 public class LeaveReview implements Command {
     private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.LeaveReview.class);
 
-    public final String REVIEW_TEXT = "reviewText";
-    public final String FILL_MARK = "filmMark";
-    public final String FILM_ID = "filmId";
-    public final String USER_ID = "userId";
-
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
-        String reviewText = request.getParameter(REVIEW_TEXT).trim();
-        int filmMark = Integer.parseInt(request.getParameter(FILL_MARK));
+        String reviewText = request.getParameter(Parameter.REVIEW_TEXT).trim();
+        int filmMark = Integer.parseInt(request.getParameter(Parameter.FILM_MARK));
 
         HttpSession session = request.getSession();
-        int userId = (Integer)session.getAttribute(USER_ID);
+        int userId = (Integer)session.getAttribute(Parameter.USER_ID);
 
-        String filmId = getFilmIdFromCookie(request, FILM_ID);
+        String filmId = getParameterFromCookie(request, Parameter.FILM_ID);
 
         Review review = new Review();
         review.setReview(reviewText);
@@ -53,14 +51,14 @@ public class LeaveReview implements Command {
             response.setContentType("text/plain");
             response.getWriter().write(result);
         } catch (ServiceException e) {
-            logger.error("Exception with leaving review.", e);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+            logger.error(LoggerMessage.LEAVING_REVIEW_EXCEPTION, e);
+            RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPath.ERROR_PAGE);
             dispatcher.forward(request, response);
         }
 
     }
 
-    private String getFilmIdFromCookie(HttpServletRequest request, String parameter) {
+    private String getParameterFromCookie(HttpServletRequest request, String parameter) {
         Cookie[] cookies = request.getCookies();
 
         String parameterValue = null;

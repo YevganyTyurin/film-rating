@@ -1,6 +1,9 @@
 package com.epam.film.rating.controller.impl;
 
 import com.epam.film.rating.controller.Command;
+import com.epam.film.rating.controller.constant.JSPPath;
+import com.epam.film.rating.controller.constant.LoggerMessage;
+import com.epam.film.rating.controller.constant.Parameter;
 import com.epam.film.rating.entity.review.ReviewApproval;
 import com.epam.film.rating.service.ReviewApprovalService;
 import com.epam.film.rating.service.ReviewService;
@@ -18,17 +21,16 @@ import org.apache.logging.log4j.Logger;
 
 public class Dislike implements Command {
     private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.Dislike.class);
-    public final String ID = "id";
-    public final String USER_ID = "userId";
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        int reviewId = Integer.parseInt(request.getParameter(ID));
+        int reviewId = Integer.parseInt(request.getParameter(Parameter.REVIEW_ID));
         int dislikesAmount;
 
         try {
             HttpSession session = request.getSession();
-            int userId = (Integer)session.getAttribute(USER_ID);
+            int userId = (Integer)session.getAttribute(Parameter.USER_ID);
 
             ServiceFactory instance = ServiceFactory.getInstance();
             ReviewApprovalService reviewApprovalService = instance.getReviewApprovalService();
@@ -44,7 +46,6 @@ public class Dislike implements Command {
                 } else {
                     reviewApprovalService.updateReviewApprovalDislike(true, userId, reviewId);
                     dislikesAmount++;
-
                 }
             } else {
                 reviewApprovalService.addReviewApproval(userId, reviewId, false, true);
@@ -56,8 +57,8 @@ public class Dislike implements Command {
             response.getWriter().write(Integer.toString(dislikesAmount));
 
         } catch (ServiceException e) {
-            logger.error("Exception in updating dislikes.", e);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+            logger.error(LoggerMessage.UPDATE_DISLIKES_EXCEPTION, e);
+            RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPath.ERROR_PAGE);
             dispatcher.forward(request, response);
         }
     }

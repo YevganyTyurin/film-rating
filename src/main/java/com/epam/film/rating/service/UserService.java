@@ -38,4 +38,6 @@ public interface UserService {
     boolean updateRole(int userId, int roleId) throws ServiceException;
 
     int getRoleId (int userId) throws ServiceException;
+
+    boolean activateAccount(String email) throws ServiceException;
 }

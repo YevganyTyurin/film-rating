@@ -113,6 +113,17 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public boolean activateAccount(String email) throws ServiceException {
+        DAOFactory factory = DAOFactory.getInstance();
+        UserDAO userDAO = factory.getUserDAO();
+        try {
+            return userDAO.activateAccount(email);
+        } catch (DAOException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    @Override
     public boolean isBanned(int id) throws ServiceException {
         DAOFactory factory = DAOFactory.getInstance();
         UserDAO userDAO = factory.getUserDAO();

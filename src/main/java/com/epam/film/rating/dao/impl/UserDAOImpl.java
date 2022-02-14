@@ -1,11 +1,13 @@
 package com.epam.film.rating.dao.impl;
 
 import com.epam.film.rating.connectionpool.ConnectionPool;
+import com.epam.film.rating.dao.DAOFactory;
 import com.epam.film.rating.dao.UserDAO;
 import com.epam.film.rating.dao.builder.InstanceBuilder;
 import com.epam.film.rating.dao.exception.DAOException;
 import com.epam.film.rating.entity.user.Role;
 import com.epam.film.rating.entity.user.User;
+import com.epam.film.rating.service.exception.ServiceException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -47,6 +49,7 @@ public class UserDAOImpl implements UserDAO {
     public static String UPDATE_USER = "update user set login=?, password=?, nickname=?, name=?, surname=?, phone_number=?, email=?  where id=?;";
     public static String DELETE_USER = "delete from user where id=?;";
     public static String UPDATE_IS_BANNED = "update user set is_banned=? where id=?;";
+    public static String ACTIVATE_ACCOUNT = "update user set is_banned=? where email=?;";
     public static String UPDATE_ROLE = "UPDATE user SET user_role_id=? WHERE id=?;";
 
     public static String LOG_IN = "select * from user where login=? and password=?;";
@@ -294,6 +297,26 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement = connection.prepareStatement(UPDATE_IS_BANNED);
             preparedStatement.setInt(2, id);
             preparedStatement.setBoolean(1, isBanned);
+            if (preparedStatement.executeUpdate() == 1) {
+                return true;
+            }
+        } catch (SQLException e) {
+            throw new DAOException(e);
+        } finally {
+            connectable.closeConnection(preparedStatement, connection);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean activateAccount(String email) throws DAOException {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        try {
+            connection = connectable.getConnection();
+            preparedStatement = connection.prepareStatement(ACTIVATE_ACCOUNT);
+            preparedStatement.setString(2, email);
+            preparedStatement.setBoolean(1, false);
             if (preparedStatement.executeUpdate() == 1) {
                 return true;
             }

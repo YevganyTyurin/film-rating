@@ -2,7 +2,7 @@ function changeRole(a) {
     $.ajax({
         url : 'Controller?command=changeUserRole',
         data : {
-            id : a
+            userId : a
         },
         async: false,
         type: 'POST',
@@ -21,7 +21,7 @@ function ban(a) {
     $.ajax({
         url : 'Controller?command=changeUserIsBanned',
         data : {
-            id : a
+            userId : a
         },
         async: false,
         type: 'POST',

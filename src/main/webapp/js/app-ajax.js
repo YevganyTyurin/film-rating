@@ -42,7 +42,7 @@ function updateLike(element) {
     $.ajax({
         url : 'Controller?command=updateLike',
         data : {
-            id : element.value
+            reviewId : element.value
         },
         async: false,
         type: 'POST',
@@ -70,7 +70,7 @@ function updateDislike(element) {
     $.ajax({
         url : 'Controller?command=updateDislike',
         data : {
-            id : element.value
+            reviewId : element.value
         },
         async: false,
         type: 'POST',

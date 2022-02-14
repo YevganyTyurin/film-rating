@@ -1,6 +1,9 @@
 package com.epam.film.rating.controller.impl;
 
 import com.epam.film.rating.controller.Command;
+import com.epam.film.rating.controller.constant.JSPPath;
+import com.epam.film.rating.controller.constant.LoggerMessage;
+import com.epam.film.rating.controller.constant.Parameter;
 import com.epam.film.rating.entity.review.ReviewApproval;
 import com.epam.film.rating.service.ReviewApprovalService;
 import com.epam.film.rating.service.ReviewService;
@@ -18,18 +21,17 @@ import org.apache.logging.log4j.Logger;
 
 public class Like implements Command {
     private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.Like.class);
-    public final String currentURL = "/WEB-INF/jsp/filmDescription.jsp";
-    public final String URL = "URL";
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        int reviewId = Integer.parseInt(request.getParameter("id"));
+        int reviewId = Integer.parseInt(request.getParameter(Parameter.REVIEW_ID));
 
         int likeAmount;
 
         HttpSession session = request.getSession();
 
-        int userId = (Integer)session.getAttribute("userId");
+        int userId = (Integer)session.getAttribute(Parameter.USER_ID);
 
         try {
             ServiceFactory instance = ServiceFactory.getInstance();
@@ -60,8 +62,8 @@ public class Like implements Command {
             response.getWriter().write(Integer.toString(likeAmount));
 
         } catch (ServiceException e) {
-            logger.error("Exception with updating like.", e);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+            logger.error(LoggerMessage.UPDATE_LIKES_EXCEPTION, e);
+            RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPath.ERROR_PAGE);
             dispatcher.forward(request, response);
         }
 

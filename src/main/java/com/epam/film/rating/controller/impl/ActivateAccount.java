@@ -1,6 +1,9 @@
 package com.epam.film.rating.controller.impl;
 
 import com.epam.film.rating.controller.Command;
+import com.epam.film.rating.controller.constant.JSPPath;
+import com.epam.film.rating.controller.constant.LoggerMessage;
+import com.epam.film.rating.controller.constant.Parameter;
 import com.epam.film.rating.service.ServiceFactory;
 import com.epam.film.rating.service.UserService;
 import com.epam.film.rating.service.exception.ServiceException;
@@ -13,12 +16,9 @@ import java.io.IOException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-
-
 public class ActivateAccount implements Command {
-    public final String ID = "id";
-
     private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.ActivateAccount.class);
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -26,13 +26,12 @@ public class ActivateAccount implements Command {
             ServiceFactory instance = ServiceFactory.getInstance();
             UserService userService = instance.getUserService();
 
-            int userId = Integer.parseInt(request.getParameter(ID));
-            userService.updateIsBanned(userId, false);
-
+            String email = request.getParameter(Parameter.EMAIL);
+            userService.activateAccount(email);
 
         } catch (ServiceException e) {
-            logger.error("Exception in activating account.", e);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/error.jsp");
+            logger.error(LoggerMessage.ACTIVATING_ACCOUNT_EXCEPTION, e);
+            RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPath.ERROR_PAGE);
             dispatcher.forward(request, response);
         }
     }

@@ -12,20 +12,20 @@ public final class CommandProvider {
     public CommandProvider() {
         commands.put("goToAdminPage", new GoToAdminPage());
         commands.put("goToFilmsChoicePage", new GoToFilmsChoicePage());
+        commands.put("goToRegistrationPage", new GoToRegistrationPage());
+        commands.put("goToLoginPage", new GoToLoginPage());
+        commands.put("goToMainPage", new GoToMainPage());
+        commands.put("goToFilmDescriptionPage", new GoToFilmDescriptionPage());
+        commands.put("goToReviewChangePage", new GoToReviewChangePage());
 
         commands.put("login", new Login());
         commands.put("registration", new Registration());
-        commands.put("goToLoginPage", new GoToLoginPage());
-        commands.put("goToRegistrationPage", new GoToRegistrationPage());
         commands.put("changeLanguage", new ChangeLanguage());
-        commands.put("goToMainPage", new GoToMainPage());
         commands.put("findFilmsByParameters", new FindFilmsByParameters());
-        commands.put("goToFilmDescriptionPage", new GoToFilmDescriptionPage());
         commands.put("leaveReview", new LeaveReview());
         commands.put("updateLike", new Like());
         commands.put("updateDislike", new Dislike());
         commands.put("findReviewsByParameters", new FindReviewsByParameters());
-        commands.put("goToReviewChangePage", new GoToReviewChangePage());
         commands.put("updateReview", new UpdateReview());
         commands.put("deleteReview", new DeleteReview());
         commands.put("changeUserIsBanned", new ChangeUserIsBanned());
@@ -37,7 +37,6 @@ public final class CommandProvider {
     }
 
     public final Command getCommand(String commandName) {
-        Command command = commands.get(commandName);
-        return command;
+        return commands.get(commandName);
     }
 }

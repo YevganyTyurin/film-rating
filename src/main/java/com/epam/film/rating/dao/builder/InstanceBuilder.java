@@ -33,25 +33,8 @@ public class InstanceBuilder {
         user.setRole(Role.getRole(resultSet.getInt(UserDAOImpl.ROLE_ID)));
         user.setStatus(resultSet.getString(UserDAOImpl.STATUS));
 
-        System.out.println("USER IS BLOCKED " + user.isBanned());
-
         return user;
     }
-
-//    public static User buildUser(ResultSet resultSet) throws SQLException {
-//        User user = new User();
-//
-//        user.setLogin(resultSet.getString(UserDAOImpl.LOGIN));
-//        user.setPassword(resultSet.getString(UserDAOImpl.PASSWORD));
-//        user.setNickname(resultSet.getString(UserDAOImpl.NICKNAME));
-//        user.setName(resultSet.getString(UserDAOImpl.NAME));
-//        user.setSurname(resultSet.getString(UserDAOImpl.SURNAME));
-//        user.setPhoneNumber(resultSet.getString(UserDAOImpl.PHONE_NUMBER));
-//        user.seteMail(resultSet.getString(UserDAOImpl.EMAIL));
-//        user.setBanned(resultSet.getBoolean(UserDAOImpl.IS_BANNED));
-//
-//        return user;
-//    }
 
     public static Review buildReview(ResultSet resultSet) throws SQLException {
         Review review = new Review();
@@ -112,9 +95,6 @@ public class InstanceBuilder {
         filmReviewDTO.setFilmName(resultSet.getString(FilmDAOImpl.NAME));
         filmReviewDTO.setReview(resultSet.getString(ReviewDAOImpl.REVIEW));
         filmReviewDTO.setUserId(resultSet.getInt("users_id"));
-//        filmReviewDTO.setBanned(resultSet.getBoolean("is_banned"));
-
-//        System.out.println("it's banned = " + filmReviewDTO.getIsBanned());
 
         return filmReviewDTO;
     }

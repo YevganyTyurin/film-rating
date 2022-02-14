@@ -36,9 +36,9 @@ public class SendingEmail {
             MimeMessage message = new MimeMessage(session);
             message.setFrom(new InternetAddress(email));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(userEmail));
-            message.setSubject("My first email!");
-            message.setText("Verification link ...");
-            message.setText("Your verification link :: " + "http://localhost:8080/film_rating/Controller?command=activateAccount&id=31");
+            message.setSubject("Verification on film-rating");
+            message.setText("Hello!");
+            message.setText("Your verification link :: " + "http://localhost:8080/film_rating/Controller?command=activateAccount&email=" + userEmail);
             Transport.send(message);
         } catch (MessagingException e) {
             throw new ServiceException(e);

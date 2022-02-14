@@ -2,7 +2,7 @@ function deleteReview(element) {
     $.ajax({
         url : 'Controller?command=deleteReview',
         data : {
-            id : element.value
+            reviewId : element.value
         },
         async: false,
         type: 'POST',
