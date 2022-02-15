@@ -6,8 +6,19 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 
+
+
 @WebServlet(name = "Controller", value = "/Controller")
 public class Controller extends HttpServlet {
+    /**
+     * Class
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException
+     * @throws IOException
+     */
+
     private final CommandProvider provider = new CommandProvider();
 
     @Override

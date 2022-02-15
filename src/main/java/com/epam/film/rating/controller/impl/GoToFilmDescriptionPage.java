@@ -25,6 +25,9 @@ import org.apache.logging.log4j.Logger;
 
 
 public class GoToFilmDescriptionPage implements Command {
+    /**
+     * Go to film description page command.
+     */
     private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.GoToFilmDescriptionPage.class);
 
     @Override

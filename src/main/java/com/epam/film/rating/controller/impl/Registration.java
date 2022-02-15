@@ -19,6 +19,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Registration implements Command {
+    /**
+     * Registration command. Put userdata in database
+     */
     private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.Registration.class);
 
     @Override

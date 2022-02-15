@@ -20,18 +20,21 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Like implements Command {
+    /**
+     * Update like amount command. Give updated amount of likes in response
+     */
+
     private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.Like.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        int reviewId = Integer.parseInt(request.getParameter(Parameter.REVIEW_ID));
-
         int likeAmount;
+        int userId;
+        int reviewId = Integer.parseInt(request.getParameter(Parameter.REVIEW_ID));
 
         HttpSession session = request.getSession();
 
-        int userId = (Integer)session.getAttribute(Parameter.USER_ID);
+        userId = (Integer)session.getAttribute(Parameter.USER_ID);
 
         try {
             ServiceFactory instance = ServiceFactory.getInstance();

@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class GoToMainPage implements Command {
+    /**
+     * Go to main page command.
+     */
 
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

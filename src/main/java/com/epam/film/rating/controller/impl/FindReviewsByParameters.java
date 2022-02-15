@@ -22,6 +22,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class FindReviewsByParameters implements Command {
+    /**
+     * Create list of reviews by parameters command. Use this list as attribute
+     */
     private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.FindReviewsByParameters.class);
 
     private static final int AMOUNT_OF_RECORDS_ON_PAGE = 2;
@@ -36,7 +39,6 @@ public class FindReviewsByParameters implements Command {
             int reviewAmount;
             int startFromRecordNumber;
             int amountOfPages;
-//            int amountOfPages = 0;
             ServiceFactory instance = ServiceFactory.getInstance();
             ReviewService reviewService = instance.getReviewService();
             DtoService dtoService = instance.getDtoService();

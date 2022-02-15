@@ -18,6 +18,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class UpdateReview implements Command {
+    /**
+     * Update review text command.
+     */
     private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.UpdateReview.class);
 
     @Override

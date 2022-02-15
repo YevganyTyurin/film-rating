@@ -20,6 +20,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Dislike implements Command {
+    /**
+     * Update dislike amount command. Give updated amount of dislikes in response
+     */
     private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.Dislike.class);
 
     @Override

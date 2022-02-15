@@ -12,6 +12,9 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class LogOut implements Command {
+    /**
+     * Logout command. Delete all attributes from session except language
+     */
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

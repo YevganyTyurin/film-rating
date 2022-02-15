@@ -17,17 +17,21 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class ChangeUserIsBanned implements Command {
+    /**
+     * Update user isBanned command
+     */
+
     private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.ChangeUserIsBanned.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        boolean isBanned;
         int userId = Integer.parseInt(request.getParameter(Parameter.USER_ID));
 
         try {
             ServiceFactory instance = ServiceFactory.getInstance();
             UserService userService = instance.getUserService();
-            boolean isBanned = userService.isBanned(userId);
+            isBanned = userService.isBanned(userId);
             userService.updateIsBanned(userId, !isBanned);
         } catch (ServiceException e) {
             logger.error(LoggerMessage.UPDATE_IS_BANNED_EXCEPTION, e);

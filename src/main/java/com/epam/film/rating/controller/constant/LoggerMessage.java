@@ -1,6 +1,9 @@
 package com.epam.film.rating.controller.constant;
 
 public final class LoggerMessage {
+    /**
+     * Class with messages for logger constants
+     */
     public static final String ACTIVATING_ACCOUNT_EXCEPTION = "Exception in activating account.";
     public static final String ADDING_FILM_EXCEPTION = "Exception in adding film.";
     public static final String ADDING_FILM_GENRES_EXCEPTION = "Exception in adding film genres relations.";

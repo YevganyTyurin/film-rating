@@ -17,6 +17,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class DeleteReview implements Command {
+    /**
+     * Delete review command.
+     */
     private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.DeleteReview.class);
 
     @Override

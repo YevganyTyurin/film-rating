@@ -1,6 +1,9 @@
 package com.epam.film.rating.controller.constant;
 
 public final class JSPPath {
+    /**
+     * Class with jsp pages path constants
+     */
     public static final String ERROR_PAGE = "/error.jsp";
     public static final String LOGIN_PAGE = "/WEB-INF/jsp/login.jsp";
     public static final String MAIN_PAGE = "/WEB-INF/jsp/mainPage.jsp";

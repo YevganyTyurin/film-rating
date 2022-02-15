@@ -19,6 +19,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class GoToReviewChangePage implements Command {
+    /**
+     * Go to review change page command.
+     */
     private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.GoToReviewChangePage.class);
 
     @Override
@@ -29,8 +32,6 @@ public class GoToReviewChangePage implements Command {
 
         ServiceFactory instance = ServiceFactory.getInstance();
         ReviewService reviewService = instance.getReviewService();
-
-        response.setContentType("text/plain");
 
         int reviewId = Integer.parseInt(request.getParameter(Parameter.REVIEW_ID));
 

@@ -21,6 +21,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class FindFilmsByParameters implements Command {
+    /**
+     * Create list of films by parameters command. Use this list as attribute
+     */
+
     private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.FindFilmsByParameters.class);
 
     private static final int AMOUNT_OF_RECORDS_ON_PAGE = 2;
@@ -32,7 +36,6 @@ public class FindFilmsByParameters implements Command {
             int pageNumber;
             int filmAmount;
             List<Integer> pageNumbers;
-//            int amountOfPages = 0;
             int amountOfPages;
             int startFromRecordNumber;
 
@@ -41,8 +44,6 @@ public class FindFilmsByParameters implements Command {
 
             ServiceFactory instance = ServiceFactory.getInstance();
             FilmService filmService = instance.getFilmService();
-
-            response.setContentType("text/html");
 
             String year = request.getParameter(Parameter.PRODUCTION_YEAR);
             String ageRating = request.getParameter(Parameter.AGE_RATING);

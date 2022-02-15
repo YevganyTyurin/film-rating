@@ -22,6 +22,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class Login implements Command {
+    /**
+     * Login command. Put id, isBanned and role in session as attribute
+     */
     private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.Login.class);
 
     @Override

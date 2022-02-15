@@ -6,6 +6,10 @@ import com.epam.film.rating.controller.impl.LeaveReview;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class that provides relation with command command name.
+ */
+
 public final class CommandProvider {
     private final Map<String, Command> commands = new HashMap<>();
 

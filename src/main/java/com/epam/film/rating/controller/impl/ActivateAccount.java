@@ -17,6 +17,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class ActivateAccount implements Command {
+    /**
+     * Unbanned(activate) user account command
+     */
+
     private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.ActivateAccount.class);
 
     @Override

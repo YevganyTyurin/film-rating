@@ -18,18 +18,21 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class ChangeUserRole implements Command {
+    /**
+     * Update user role command
+     */
     private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.ChangeUserRole.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        int roleId;
         int userId = Integer.parseInt(request.getParameter(Parameter.USER_ID));
 
         try {
             ServiceFactory instance = ServiceFactory.getInstance();
             UserService userService = instance.getUserService();
 
-            int roleId = userService.getRoleId(userId);
+            roleId = userService.getRoleId(userId);
             if(roleId == Role.USER.getId()) {
                 userService.updateRole(userId, Role.ADMINISTRATOR.getId());
             } else {

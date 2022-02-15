@@ -1,6 +1,9 @@
 package com.epam.film.rating.controller.constant;
 
 public final class Parameter {
+    /**
+     * Class with constant names of parameters and attributes
+     */
     public static final String PRODUCTION_YEAR = "productionYear";
     public static final String AGE_RATING = "age_rating";
     public static final String TYPE = "type";

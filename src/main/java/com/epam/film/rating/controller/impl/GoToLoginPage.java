@@ -13,6 +13,9 @@ import java.io.IOException;
 
 
 public class GoToLoginPage implements Command {
+    /**
+     * Go to login page command.
+     */
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

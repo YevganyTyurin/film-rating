@@ -20,16 +20,21 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class LeaveReview implements Command {
+    /**
+     * Add film review command.
+     */
     private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.LeaveReview.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 
+        int filmMark;
+        int userId;
         String reviewText = request.getParameter(Parameter.REVIEW_TEXT).trim();
-        int filmMark = Integer.parseInt(request.getParameter(Parameter.FILM_MARK));
+        filmMark = Integer.parseInt(request.getParameter(Parameter.FILM_MARK));
 
         HttpSession session = request.getSession();
-        int userId = (Integer)session.getAttribute(Parameter.USER_ID);
+        userId = (Integer)session.getAttribute(Parameter.USER_ID);
 
         String filmId = getParameterFromCookie(request, Parameter.FILM_ID);
 

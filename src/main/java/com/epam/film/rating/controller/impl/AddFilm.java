@@ -17,10 +17,17 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class AddFilm implements Command {
+    /**
+     * Add film instance to database command
+     */
+
     private static final Logger logger = LogManager.getLogger(com.epam.film.rating.controller.impl.AddFilm.class);
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int productionYear;
+        int ageRatingId;
+        int filmTypeId;
 
         try {
             ServiceFactory instance = ServiceFactory.getInstance();
@@ -31,11 +38,10 @@ public class AddFilm implements Command {
             String []genres = request.getParameterValues(Parameter.GENRE);
             String description = request.getParameter(Parameter.FILM_DESCRIPTION);
             String filmName = request.getParameter(Parameter.FILM_NAME);
-            int productionYear = Integer.parseInt(request.getParameter(Parameter.PRODUCTION_YEAR));
+            productionYear = Integer.parseInt(request.getParameter(Parameter.PRODUCTION_YEAR));
 
-
-            int ageRatingId = filmService.getAgeRatingId(ageRating);
-            int filmTypeId = filmService.getFilmTypeId(filmType);
+            ageRatingId = filmService.getAgeRatingId(ageRating);
+            filmTypeId = filmService.getFilmTypeId(filmType);
 
             filmService.addFilm(filmName, productionYear, description, ageRatingId, filmTypeId);
 
@@ -52,12 +58,13 @@ public class AddFilm implements Command {
     }
 
     private void addFilmGenres (String[] genres, String filmName, int productionYear) {
+        int filmId;
 
         try {
             ServiceFactory instance = ServiceFactory.getInstance();
             FilmService filmService = instance.getFilmService();
 
-            int filmId = filmService.getFilmId(filmName, productionYear);
+            filmId = filmService.getFilmId(filmName, productionYear);
 
             if(genres != null) {
                 for (String genre : genres) {
