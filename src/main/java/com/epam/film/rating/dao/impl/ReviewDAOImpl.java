@@ -6,10 +6,8 @@ import com.epam.film.rating.dao.builder.InstanceBuilder;
 import com.epam.film.rating.dao.exception.DAOException;
 import com.epam.film.rating.entity.FilmReviewDTO;
 import com.epam.film.rating.entity.ReviewDTO;
-import com.epam.film.rating.entity.film.Film;
 import com.epam.film.rating.entity.review.Review;
 import com.epam.film.rating.entity.review.ReviewApproval;
-import com.epam.film.rating.entity.user.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -30,7 +28,7 @@ public class ReviewDAOImpl implements ReviewDAO {
 
     ConnectionPool connectable = ConnectionPool.getInstance();
 
-    public ReviewDAOImpl() {};
+    public ReviewDAOImpl() {}
 
     public static String GET_REVIEWS_BY_ID = "select review.id, review.review, review.mark, review.likes_amount, review.dislikes_amount from review WHERE review.film_id=? AND review.users_id=?;";
     public static String GET_REVIEW_BY_ID = "select review.id, review.review, review.mark, review.likes_amount, review.dislikes_amount from review WHERE review.id=?;";
