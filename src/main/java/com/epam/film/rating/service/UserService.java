@@ -24,8 +24,7 @@ public interface UserService {
 
     boolean validateUserLogin(String login, String password);
 
-    User login(String login, String password) throws ServiceException;
-    User login2(String login) throws ServiceException;
+    User login(String login) throws ServiceException;
 
     int add (User user) throws ServiceException;
 

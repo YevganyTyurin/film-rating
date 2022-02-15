@@ -22,22 +22,22 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    public List<Film> getFilmsByParameters(String year, String age_rating, String film_type, String genres[], int startFromRecordNumber) throws ServiceException {
+    public List<Film> getFilmsByParameters(String year, String ageRating, String filmType, String []genres, int startFromRecordNumber) throws ServiceException {
         DAOFactory factory = DAOFactory.getInstance();
         FilmDAO filmDAO = factory.getFilmDAO();
         try {
-            return  filmDAO.getFilmsByParameters(year, age_rating, film_type, genres, startFromRecordNumber);
+            return  filmDAO.getFilmsByParameters(year, ageRating, filmType, genres, startFromRecordNumber);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
 
     @Override
-    public int getFilmAmount(String year, String age_rating, String film_type, String[] genres) throws ServiceException {
+    public int getFilmAmount(String year, String ageRating, String filmType, String []genres) throws ServiceException {
         DAOFactory factory = DAOFactory.getInstance();
         FilmDAO filmDAO = factory.getFilmDAO();
         try {
-            return filmDAO.getFilmAmount(year, age_rating, film_type, genres);
+            return filmDAO.getFilmAmount(year, ageRating, filmType, genres);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }

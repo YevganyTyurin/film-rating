@@ -40,7 +40,7 @@ public class Login implements Command {
             if(userService.validateUserLogin(login, password)) {
                 //throw ex
             }
-            User user = userService.login2(login);
+            User user = userService.login(login);
 
             boolean isCheckedPassword = Password.checkPassword(password, user.getPassword());
 

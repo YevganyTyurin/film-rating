@@ -57,27 +57,15 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User login(String login, String password) throws ServiceException {
+    public User login(String login) throws ServiceException {
         DAOFactory factory = DAOFactory.getInstance();
         UserDAO userDAO = factory.getUserDAO();
         try {
-            return userDAO.login(login, password);
+            return userDAO.login(login);
         } catch (DAOException e) {
             throw new ServiceException(e);
         }
     }
-
-    @Override
-    public User login2(String login) throws ServiceException {
-        DAOFactory factory = DAOFactory.getInstance();
-        UserDAO userDAO = factory.getUserDAO();
-        try {
-            return userDAO.login2(login);
-        } catch (DAOException e) {
-            throw new ServiceException(e);
-        }
-    }
-
 
     @Override
     public int add (User user) throws ServiceException {

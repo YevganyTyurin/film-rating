@@ -1,19 +1,12 @@
 package com.epam.film.rating.dao;
 
 import com.epam.film.rating.dao.exception.DAOException;
-import com.epam.film.rating.entity.user.Role;
 import com.epam.film.rating.entity.user.User;
-import com.epam.film.rating.service.exception.ServiceException;
-
-import java.sql.SQLException;
-import java.util.List;
 
 public interface UserDAO {
     int add(User user) throws DAOException;
 
-    User login(String login, String password) throws DAOException;
-
-    User login2(String login) throws DAOException;
+    User login(String login) throws DAOException;
 
     User findById(int id) throws DAOException;
 
@@ -24,8 +17,6 @@ public interface UserDAO {
     boolean updateRole(int userId, int roleId) throws DAOException;
 
     int getRoleId (int userId) throws DAOException;
-
-    public List<User> getAll() throws SQLException;
 
     boolean activateAccount(String email) throws DAOException;
 }

@@ -29,14 +29,8 @@ public class DtoDAOImpl implements DtoDAO {
             preparedStatement = connection.prepareStatement(sql);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                System.out.println("nicer dicer");
                 films.add(InstanceBuilder.buildFilmReviewDTO(resultSet));
-                for (FilmReviewDTO review: films) {
-                    System.out.println(review.getReview());
-                }
             }
-//TODO
-            //TODO
             return films;
         }catch (SQLException e) {
             throw new DAOException(e);

@@ -5,5 +5,5 @@ import com.epam.film.rating.entity.FilmReviewDTO;
 import java.util.List;
 
 public interface DtoDAO {
-    List<FilmReviewDTO> getReviewsByParameters(String year, String age_rating, String film_type, String genres[], int amount, String filmId, String userId) throws DAOException;
+    List<FilmReviewDTO> getReviewsByParameters(String year, String ageRating, String filmType, String []genres, int amount, String filmId, String userId) throws DAOException;
 }

@@ -5,7 +5,6 @@ import com.epam.film.rating.dao.FilmDAO;
 import com.epam.film.rating.dao.builder.InstanceBuilder;
 import com.epam.film.rating.dao.exception.DAOException;
 import com.epam.film.rating.entity.film.Film;
-import com.epam.film.rating.entity.user.User;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -20,40 +19,25 @@ public class FilmDAOImpl implements FilmDAO {
     public static final String DESCRIPTION = "description";
     public static final String FILM_RATING = "film_rating";
     public static final String REVIEW_AMOUNT = "review_amount";
-//    public static final String AGE_RATING = "age_rating_id";
-//    public static final String TYPE_ID = "type_id";
     public static final String AGE_RATING = "age_rating";
     public static final String TYPE = "type";
-
     public static final String GENRE = "genre";
-
     public static final String COUNTRY_OF_ORIGIN = "production_country";
-
     public static final String TRAILER_VIDEO = "trailer_video";
     public static final String POSTER_IMAGE = "poster_image";
-
-
 
     public static String GET_POSTERS_BY_ID = "select poster_image from film_poster where film_id=?;";
     public static String GET_TRAILERS_BY_ID = "select trailer_video from film_trailer where film_id=?;";
     public static String GET_GENRES_BY_ID = "SELECT genre.genre FROM genre JOIN film_genre ON genre.id=film_genre.genre_id WHERE film_genre.film_id=?;";
     public static String GET_COUNTRY_OF_ORIGIN_BY_ID = "SELECT country_of_origin.production_country FROM country_of_origin JOIN film_country_of_origin ON country_of_origin.id=film_country_of_origin.country_of_origin_id WHERE film_country_of_origin.film_id=?;";
-
     public static String GET_FILMS = "select * from film;";
-
-    public static String ADD_POSTER = "insert into film_poster values (poster_image, film_id) values(?, ?) where film_id=?;";
-    public static String ADD_TRAILER = "insert into film_trailer values (trailer_video, film_id) values(?, ?) where film_id=?;";
-//    public static String ADD_FILM = "insert into film values (production_year, name, description, type_id, age_rating) values(?, ?, ?, ?, ?);";
     public static String ADD_FILM = "insert into film (production_year, name, description, type_id, age_rating_id) values(?, ?, ?, ?, ?);";
     public static String ADD_FILM_GENRE = "insert into film_genre (film_id, genre_id) values(?, ?);";
-
-
     public static String GET_FILM_BY_ID = "SELECT film.id, film.production_year, film.name, film.description, film.film_rating, film.review_amount, film_age_rating.age_rating, film_type.type FROM film JOIN film_age_rating ON film.age_rating_id=film_age_rating.id JOIN film_type ON film.type_id=film_type.id WHERE film.id=?";
     public static String GET_AGE_RATING_ID = "SELECT film_age_rating.id FROM film_age_rating WHERE film_age_rating.age_rating=?;";
     public static String GET_FILM_TYPE_ID = "SELECT film_type.id FROM film_type WHERE film_type.type=?;";
     public static String GET_GENRE_ID = "SELECT genre.id FROM genre WHERE genre.genre=?;";
     public static String GET_FILM_ID = "SELECT film.id FROM film WHERE film.production_year=? AND film.name=?";
-
 
     ConnectionPool connectable = ConnectionPool.getInstance();
 
@@ -416,41 +400,6 @@ public class FilmDAOImpl implements FilmDAO {
         }
     }
 
-
-    @Override
-    public int addTrailer (String trailerPath, int filmId) throws SQLException, InterruptedException {
-
-        Connection connection = connectable.getConnection();
-        PreparedStatement pr = null;
-        try{
-            pr = connection.prepareStatement(ADD_TRAILER);
-            pr.setString(1, trailerPath);
-            pr.setInt(2, filmId);
-            pr.executeUpdate();
-        } catch (SQLException e) {
-            //TODO
-        } finally {
-            connectable.closeConnection(pr, connection);
-        }
-        return 1;
-    }
-
-    public int addPoster(String posterPath, int filmId) throws SQLException, InterruptedException {
-        Connection connection = connectable.getConnection();
-        PreparedStatement pr = null;
-        try{
-            pr = connection.prepareStatement(ADD_POSTER);
-            pr.setString(1, posterPath);
-            pr.setInt(2, filmId);
-            pr.executeUpdate();
-        } catch (SQLException e) {
-            //TODO
-        } finally {
-            connectable.closeConnection(pr, connection);
-        }
-        return 1;
-    }
-
     public int addFilm (String filmName, int productionYear, String description, int ageRatingId, int typeId) throws DAOException {
         Connection connection = connectable.getConnection();
         PreparedStatement pr = null;
@@ -493,77 +442,4 @@ public class FilmDAOImpl implements FilmDAO {
             connectable.closeConnection(pr, connection);
         }
     }
-
-//    @Override
-//    public boolean addFilmGenre(int filmId, int genreId) throws DAOException {
-//        Connection connection = connectable.getConnection();
-//        PreparedStatement pr = null;
-//
-//        try{
-//            pr = connection.prepareStatement(ADD_FILM_GENRE);
-//
-//            pr.setInt(1, filmId);
-//            pr.setInt(2, genreId);
-//            System.out.println("pr.executeUpdate() = "  + pr.executeUpdate());
-//            if(pr.executeUpdate() > 0) {
-//                return true;
-//            }
-//        } catch (SQLException e) {
-//            throw new DAOException(e);
-//        } finally {
-//            connectable.closeConnection(pr, connection);
-//        }
-//        return false;
-//    }
-
-//     public static String ADD_USER = "insert into user (login, password, nickname, name, surname, phone_number, email) values(?, ?, ?, ?, ?, ?, ?);";
-//    public int add (User user) throws DAOException {
-//        Connection connection = connectable.getConnection();
-//        PreparedStatement pr = null;
-//
-//        try{
-//            pr = connection.prepareStatement(ADD_USER);
-//
-//            pr.setString(1, user.getLogin());
-//            pr.setString(2, user.getPassword());
-//            pr.setString(3, user.getNickname());
-//            pr.setString(4, user.getName());
-//            pr.setString(5, user.getSurname());
-//            pr.setString(6, user.getPhoneNumber());
-//            pr.setString(7, user.geteMail());
-//
-//            pr.executeUpdate();
-//        } catch (SQLException e) {
-//            throw new DAOException(e);
-//        } finally {
-//            connectable.closeConnection(pr, connection);
-//        }
-//        return 1;
-//    }
-
-
-
-
-//    public int addFilm (Film film) throws SQLException, InterruptedException {
-//        Connection connection = connectable.getConnection();
-//        PreparedStatement pr = null;
-//
-//        try{
-//            pr = connection.prepareStatement(ADD_FILM);
-//
-//            pr.setInt(1, film.getProductionYear());
-//            pr.setString(2, film.getName());
-//            pr.setString(3, film.getDescription());
-////            pr.setInt(4, film.getType().getId());
-////            pr.setInt(5, film.getAgeRating().getId());
-//
-//            pr.executeUpdate();
-//        } catch (SQLException | NullPointerException e) {
-//            //TODO
-//        } finally {
-//            connectable.closeConnection(pr, connection);
-//        }
-//        return 1;
-//
-//    }
 }

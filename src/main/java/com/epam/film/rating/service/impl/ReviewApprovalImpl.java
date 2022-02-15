@@ -2,7 +2,6 @@ package com.epam.film.rating.service.impl;
 
 import com.epam.film.rating.dao.DAOFactory;
 import com.epam.film.rating.dao.ReviewApprovalDAO;
-import com.epam.film.rating.dao.ReviewDAO;
 import com.epam.film.rating.dao.exception.DAOException;
 import com.epam.film.rating.entity.review.ReviewApproval;
 import com.epam.film.rating.service.ReviewApprovalService;
