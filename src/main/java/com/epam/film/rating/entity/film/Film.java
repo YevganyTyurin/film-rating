@@ -1,9 +1,10 @@
 package com.epam.film.rating.entity.film;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
-public class Film {
+public class Film implements Serializable {
     private int id;
     private int productionYear;
     private String name;

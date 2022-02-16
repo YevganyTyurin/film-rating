@@ -43,18 +43,11 @@ public class LeaveReview implements Command {
         review.setMark(filmMark);
         review.setUserId(userId);
 
-        String result = null;
         try {
             ServiceFactory instance = ServiceFactory.getInstance();
             ReviewService service = instance.getReviewService();
-            if(service.addReview(review, Integer.parseInt(filmId))) {
-                result = "success";
-            } else {
-                result = "not success";
-            }
+            service.addReview(review, Integer.parseInt(filmId));
 
-            response.setContentType("text/plain");
-            response.getWriter().write(result);
         } catch (ServiceException e) {
             logger.error(LoggerMessage.LEAVING_REVIEW_EXCEPTION, e);
             RequestDispatcher dispatcher = request.getRequestDispatcher(JSPPath.ERROR_PAGE);

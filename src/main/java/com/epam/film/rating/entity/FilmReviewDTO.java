@@ -1,13 +1,13 @@
 package com.epam.film.rating.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class FilmReviewDTO {
+public class FilmReviewDTO implements Serializable {
     private int reviewId;
     private String review;
     private String filmName;
     private int userId;
-//    private boolean isBanned;
 
     public FilmReviewDTO() {}
 
@@ -43,13 +43,6 @@ public class FilmReviewDTO {
         this.userId = userId;
     }
 
-//    public boolean getIsBanned() {
-//        return isBanned;
-//    }
-//
-//    public void setBanned(boolean banned) {
-//        isBanned = banned;
-//    }
 
     @Override
     public boolean equals(Object o) {

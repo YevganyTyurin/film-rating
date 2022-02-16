@@ -4,6 +4,7 @@ import com.epam.film.rating.controller.Command;
 import com.epam.film.rating.controller.constant.JSPPath;
 import com.epam.film.rating.controller.constant.LoggerMessage;
 import com.epam.film.rating.controller.constant.Parameter;
+import com.epam.film.rating.controller.constant.Redirect;
 import com.epam.film.rating.entity.user.Role;
 import com.epam.film.rating.entity.user.User;
 import com.epam.film.rating.service.ServiceFactory;
@@ -54,16 +55,16 @@ public class Login implements Command {
                 if (user.getRole().equals(Role.USER) && !user.isBanned()) {
                     user = null;
                     session.setAttribute(Parameter.URL, JSPPath.USER_PAGE);
-                    response.sendRedirect("Controller?command=goToMainPage");
+                    response.sendRedirect(Redirect.GO_TO_MAIN_PAGE);
 
                 } else if (user.getRole().equals(Role.ADMINISTRATOR) && !user.isBanned()) {
                     user = null;
                     session.setAttribute(Parameter.URL, JSPPath.ADMIN_PAGE);
-                    response.sendRedirect("Controller?command=goToAdminPage");
+                    response.sendRedirect(Redirect.GO_TO_ADMINISTRATOR_PAGE);
                 } else {
                     user = null;
                     session.setAttribute(Parameter.URL, JSPPath.MAIN_PAGE);
-                    response.sendRedirect("Controller?command=goToMainPage");
+                    response.sendRedirect(Redirect.GO_TO_MAIN_PAGE);
                 }
             }
 

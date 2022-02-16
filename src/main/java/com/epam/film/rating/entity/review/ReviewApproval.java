@@ -1,8 +1,9 @@
 package com.epam.film.rating.entity.review;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class ReviewApproval {
+public class ReviewApproval implements Serializable {
     private boolean isLiked;
     private boolean isDisliked;
 

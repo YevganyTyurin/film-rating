@@ -46,8 +46,6 @@ public class FindReviewsByParameters implements Command {
             Cookie queryString = new Cookie(Parameter.COMMAND, request.getQueryString());
             response.addCookie(queryString);
 
-            response.setContentType("text/html");
-
             String userId = request.getParameter(Parameter.FILM_ID);
             String filmId = request.getParameter(Parameter.USER_ID);
             String year = request.getParameter(Parameter.PRODUCTION_YEAR);

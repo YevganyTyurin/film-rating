@@ -15,24 +15,7 @@ $(document).ready(function (){
             data: {fullname, fullname2},
             url: 'Controller?command=updateReview',
             success: function () {
-                alert("111");
             }
         })
     })
 })
-// function updateRev(element) {
-//     var element_parent = element.parentNode;
-//     var lll = element_parent().firstChild;
-//     $.ajax({
-//         url : 'Controller?command=updateLike',
-//         data : {
-//             id : element.value()
-//         },
-//         async: false,
-//         type: 'POST',
-//         success :
-//             function() {
-//                alert(lll)
-//             }
-//     });
-// }

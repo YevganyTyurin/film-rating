@@ -70,7 +70,6 @@ public final class ConnectionPool {
     }
 
     private PooledConnection createConnection() {
-        //TODO
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection connection = DriverManager.getConnection(databaseURL,userName,password);

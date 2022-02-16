@@ -37,7 +37,6 @@ public class SendingEmail {
             message.setFrom(new InternetAddress(email));
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(userEmail));
             message.setSubject("Verification on film-rating");
-            message.setText("Hello!");
             message.setText("Your verification link :: " + "http://localhost:8080/film_rating/Controller?command=activateAccount&email=" + userEmail);
             Transport.send(message);
         } catch (MessagingException e) {

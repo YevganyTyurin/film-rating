@@ -1,6 +1,5 @@
 package com.epam.film.rating.service;
 
-import com.epam.film.rating.dao.exception.DAOException;
 import com.epam.film.rating.entity.review.Review;
 import com.epam.film.rating.service.exception.ServiceException;
 

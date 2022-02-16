@@ -1,10 +1,9 @@
 package com.epam.film.rating.entity;
 
-import com.epam.film.rating.entity.user.Role;
-
+import java.io.Serializable;
 import java.util.Objects;
 
-public class ReviewDTO {
+public class ReviewDTO implements Serializable {
     private int id;
     private String review;
     private int mark;

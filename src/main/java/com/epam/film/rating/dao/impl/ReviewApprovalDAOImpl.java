@@ -17,7 +17,6 @@ public class ReviewApprovalDAOImpl implements ReviewApprovalDAO {
     public static String UPDATE_REVIEW_APPROVAL_DISLIKE = "update user_review_approval set user_review_approval.is_disliked=? WHERE user_review_approval.users_id=? AND user_review_approval.review_id=?;";
     public static String ADD_REVIEW_APPROVAL = "insert into user_review_approval (users_id, review_id, is_liked, is_disliked) values(?, ?, ?, ?);";
 
-
     ConnectionPool connectable = ConnectionPool.getInstance();
 
     @Override
@@ -39,9 +38,10 @@ public class ReviewApprovalDAOImpl implements ReviewApprovalDAO {
         } finally {
             connectable.closeConnection(preparedStatement, connection);
         }
-        return null; //TODO
+        return null;
     }
 
+    @Override
     public boolean updateReviewApprovalLike(boolean isLiked, int userId, int reviewId) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -62,6 +62,7 @@ public class ReviewApprovalDAOImpl implements ReviewApprovalDAO {
         return false;
     }
 
+    @Override
     public boolean updateReviewApprovalDislike(boolean isDisliked, int userId, int reviewId) throws DAOException {
         Connection connection = null;
         PreparedStatement preparedStatement = null;

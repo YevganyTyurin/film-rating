@@ -1,9 +1,9 @@
 package com.epam.film.rating.entity.review;
 
-import java.util.List;
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Review {
+public class Review implements Serializable {
     private int id;
     private String review;
     private int mark;
